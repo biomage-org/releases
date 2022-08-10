@@ -18,7 +18,7 @@ metadata:
 spec:
   releaseName: ui
   chart:
-    git: https://github.com/hms-dbmi-cellenics/iac
+    git: https://github.com/biomage-org/iac
     path: charts/nodejs
     ref: STAGING_CHART_REF
   values:
@@ -37,12 +37,12 @@ spec:
     kubernetes:
       env: staging
     biomageCi:
-      repo: hms-dbmi-cellenics/ui
+      repo: biomage-org/ui
       sandboxId: STAGING_SANDBOX_ID
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-heads-master-9c029d448b5063fd581806685a683a1f37b1ffc3
+      tag: refs-heads-master-e0e8346abf5e668361cf6e9242f190e3ee08c59a
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
