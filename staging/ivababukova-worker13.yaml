@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -138,9 +139,9 @@ spec:
     kubernetes:
       env: staging
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-13-merge-4a5f62e322ad7c2b7f9edc8cfcbd7a44b1450d26-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-13-merge-343b0de7a811030323738fe3b9864024ee194a44-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-13-merge-4a5f62e322ad7c2b7f9edc8cfcbd7a44b1450d26-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-13-merge-343b0de7a811030323738fe3b9864024ee194a44-r
       memoryRequest: 4Gi
     replicaCount: 0
     sandboxId: ivababukova-worker13
