@@ -1,0 +1,191 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: jakub-ui19
+  name: ui-jakub-ui19
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-19-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: jakub-ui19
+  name: ui
+  namespace: ui-jakub-ui19
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: jakub-ui19
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-pull-19-merge-e83908d7d30c19dfd7d0b2b9719b278211bb7b6f
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: jakub-ui19
+  name: api-jakub-ui19
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: jakub-ui19
+  name: api
+  namespace: api-jakub-ui19
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: 455486d54a9017b8f98e04c7134bbb729b375bc2
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: default
+      repo: biomage-org/api
+      sandboxId: jakub-ui19
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-heads-master-32d09daec7108ddf5fee0c48e955937d82403067
+    ingress:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: jakub-ui19
+  name: worker-jakub-ui19
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-heads-master-*-python
+    filter.fluxcd.io/r: glob:refs-heads-master-*-r
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: jakub-ui19
+  name: worker
+  namespace: worker-jakub-ui19
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: c88a3aa6b337c59f5253042d0a20dcef7801f2cc
+  releaseName: worker
+  values:
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-9003a440674a541abb4929dfda71783ba8cd0b57-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-9003a440674a541abb4929dfda71783ba8cd0b57-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: jakub-ui19
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: jakub-ui19
+  name: pipeline-jakub-ui19
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: jakub-ui19
+  name: pipeline
+  namespace: pipeline-jakub-ui19
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: 781dcf61d615f1bac21c8c241cba7180281d21f6
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-781dcf61d615f1bac21c8c241cba7180281d21f6-pipeline-runner
+    replicaCount: 0
+    sandboxId: jakub-ui19
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
