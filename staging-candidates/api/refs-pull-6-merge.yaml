@@ -18,7 +18,7 @@ metadata:
 spec:
   releaseName: api
   chart:
-    git: https://github.com/hms-dbmi-cellenics/iac
+    git: https://github.com/biomage-org/iac
     path: charts/nodejs
     ref: STAGING_CHART_REF
   values:
@@ -46,7 +46,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-6-merge-44cd3b9ec29f28ac3e2b885f506842d9048acdc2
+      tag: refs-pull-6-merge-f1721808922b5d69fa9d21876cab468a182eea07
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
