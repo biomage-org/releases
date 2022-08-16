@@ -5,15 +5,33 @@ metadata:
   labels:
     sandboxId: STAGING_SANDBOX_ID
 ---
-apiVersion: v1
-kind: ConfigMap
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
 metadata:
-  name: image-urls
+  name: pipeline
   namespace: pipeline-STAGING_SANDBOX_ID
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/pipelineRunner: glob:refs-pull-6-merge-*-pipeline-runner
   labels:
     sandboxId: STAGING_SANDBOX_ID
-data:
-  dummy: FILLED_IN_BY_CI
-  images:
-    remoter-server: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-6-merge-4746ca520617f91c5424e6be2e5737a37127c0dc-remoter-server
-    remoter-client: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-6-merge-4746ca520617f91c5424e6be2e5737a37127c0dc-remoter-client
+spec:
+  releaseName: pipeline
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: STAGING_CHART_REF
+  valuesFrom:
+    - configMapKeyRef:
+        name: account-config
+        namespace: flux
+        key: account-config.yaml
+  values:
+    clusterEnv: staging
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-6-merge-63d9fa087a0a8d01865fa6344cd526435787bfcb-pipeline-runner
+    sandboxId: STAGING_SANDBOX_ID
+    memoryRequest: 4Gi
+    replicaCount: 0
+    serviceAccount:
+      iamRole: pipeline-role-staging
