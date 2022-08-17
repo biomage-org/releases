@@ -86,7 +86,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-10-merge-4f8d120b211056cf31b1bfa5223c07aa737b7299
+      tag: refs-pull-10-merge-1bd0250940585e0f01c420c360ff3d113564c673
     ingress:
       annotations:
         alb.ingress.kubernetes.io/healthcheck-path: /v2/health
