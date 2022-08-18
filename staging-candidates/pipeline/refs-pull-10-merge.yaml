@@ -12,20 +12,26 @@ metadata:
   namespace: pipeline-STAGING_SANDBOX_ID
   annotations:
     fluxcd.io/automated: "true"
-    filter.fluxcd.io/remoter-server: glob:refs-pull-10-merge-*-remoter-server
-    filter.fluxcd.io/remoter-client: glob:refs-pull-10-merge-*-remoter-client
+    filter.fluxcd.io/pipelineRunner: glob:refs-pull-10-merge-*-pipeline-runner
   labels:
     sandboxId: STAGING_SANDBOX_ID
 spec:
   releaseName: pipeline
   chart:
-    git: git@github.com:biomage-ltd/pipeline
+    git: https://github.com/biomage-org/pipeline
     path: chart-infra/
     ref: STAGING_CHART_REF
+  valuesFrom:
+    - configMapKeyRef:
+        name: account-config
+        namespace: flux
+        key: account-config.yaml
   values:
-    remoter-server:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-10-merge-66c5bff87d2352775f9adb3d1d83f9bd15c62b6b-remoter-server
-    remoter-client:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-10-merge-66c5bff87d2352775f9adb3d1d83f9bd15c62b6b-remoter-client
+    clusterEnv: staging
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-10-merge-0084b14d44582e6d09f12c468fed61152434676e-pipeline-runner
+    sandboxId: STAGING_SANDBOX_ID
+    memoryRequest: 4Gi
+    replicaCount: 0
     serviceAccount:
-      iamRole: arn:aws:iam::242905224710:role/pipeline-role-staging
+      iamRole: pipeline-role-staging
