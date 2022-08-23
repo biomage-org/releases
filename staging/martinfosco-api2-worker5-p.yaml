@@ -10,7 +10,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   annotations:
-    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    filter.fluxcd.io/chart-image: glob:refs-pull-28-merge-*
     fluxcd.io/automated: 'false'
   labels:
     sandboxId: martinfosco-api2-worker5-p
