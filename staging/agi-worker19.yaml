@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -138,7 +139,7 @@ spec:
     kubernetes:
       env: staging
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-19-merge-c56c1eea6e7c29d4adc0c24f8aeead6858750e26-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-19-merge-75d4c307f6d3ff0f4fe6c35f90fefc8191fb8ae7-python
     r:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-19-merge-c56c1eea6e7c29d4adc0c24f8aeead6858750e26-r
       memoryRequest: 4Gi
