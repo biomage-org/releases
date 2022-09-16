@@ -21,7 +21,7 @@ spec:
   chart:
     git: https://github.com/biomage-org/worker
     path: chart-infra/
-    ref: 823036eeb71dffbaae0ffa30fa233478cda34aa7
+    ref: 851bd66d112ec445deba968910bfb1bf21d8a5f4
   valuesFrom:
     - configMapKeyRef:
         name: account-config
@@ -35,7 +35,7 @@ spec:
     sandboxId: default
     replicaCount: 2
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.30.0-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.30.1-r
       memoryRequest: 28Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.30.0-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.30.1-python
