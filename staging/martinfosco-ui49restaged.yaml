@@ -1,0 +1,191 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: ui-martinfosco-ui49restaged
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-49-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: ui
+  namespace: ui-martinfosco-ui49restaged
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: martinfosco-ui49restaged
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-pull-49-merge-007e3919c09c7e326d0419dcc556f4159ffc9b38
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: api-martinfosco-ui49restaged
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: api
+  namespace: api-martinfosco-ui49restaged
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: 907681d0d8232afe031c60a4da1407bf351a58eb
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: default
+      repo: biomage-org/api
+      sandboxId: martinfosco-ui49restaged
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-heads-master-ecf5a3e0612140eb482cf428bf4d5d9b50984efd
+    ingress:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: worker-martinfosco-ui49restaged
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-heads-master-*-python
+    filter.fluxcd.io/r: glob:refs-heads-master-*-r
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: worker
+  namespace: worker-martinfosco-ui49restaged
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: 851bd66d112ec445deba968910bfb1bf21d8a5f4
+  releaseName: worker
+  values:
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-851bd66d112ec445deba968910bfb1bf21d8a5f4-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-851bd66d112ec445deba968910bfb1bf21d8a5f4-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: martinfosco-ui49restaged
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: pipeline-martinfosco-ui49restaged
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-ui49restaged
+  name: pipeline
+  namespace: pipeline-martinfosco-ui49restaged
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: 6ab247d55b69af38cffc1f2f764fbc44336eecf8
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-6ab247d55b69af38cffc1f2f764fbc44336eecf8-pipeline-runner
+    replicaCount: 0
+    sandboxId: martinfosco-ui49restaged
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
