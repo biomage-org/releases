@@ -190,6 +190,7 @@ spec:
       key: account-config.yaml
       name: account-config
       namespace: flux
+---
 apiVersion: v1
 kind: Namespace
 metadata:
