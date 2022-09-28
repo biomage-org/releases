@@ -178,6 +178,43 @@ spec:
   releaseName: pipeline
   values:
     clusterEnv: staging
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-32-merge-f6fee5359c78531207be8e746eafb28476bac8fc-pipeline-runner
+    replicaCount: 0
+    sandboxId: ahriman-xl-pods
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: ahriman-xl-pods
+  name: pipeline-ahriman-xl-pods-xl
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-pull-32-merge-*-pipeline-runner
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: ahriman-xl-pods
+  name: pipeline-xl
+  namespace: pipeline-ahriman-xl-pods-xl
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: refs/pull/32/head
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
     memoryRequest: 118Gi
     pipelineRunner:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-32-merge-f6fee5359c78531207be8e746eafb28476bac8fc-pipeline-runner
