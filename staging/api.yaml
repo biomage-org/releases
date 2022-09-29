@@ -46,7 +46,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-heads-master-ecf5a3e0612140eb482cf428bf4d5d9b50984efd
+      tag: refs-heads-master-2f859fb392d4a1959bb06fb50a7113bf77e89527
     replicaCount: 2
     serviceAccount:
       iamRole: api-role-staging
