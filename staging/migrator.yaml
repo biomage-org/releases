@@ -27,7 +27,7 @@ metadata:
 spec:
   releaseName: migrator
   chart:
-    git: https://github.com/hms-dbmi-cellenics/pipeline
+    git: https://github.com/biomage-org/pipeline
     path: chart-infra/
     ref: refs/heads/pod-priority
   valuesFrom:
