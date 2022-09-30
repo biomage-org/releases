@@ -142,7 +142,7 @@ spec:
     python:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-0a699c09d7c176d4f9381de38650b4419e7e1b89-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-7f819a766649688ca68fcf7fffff6bfbf80c1a17-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-9229843ac63e901bfdae9615651b1784071f796c-r
       memoryRequest: 4Gi
     replicaCount: 0
     sandboxId: agi-worker24-pipeline30
