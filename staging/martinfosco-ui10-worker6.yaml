@@ -142,7 +142,7 @@ spec:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-6-merge-fd6915e5c6c1f0d0bcebd5ffedb61e36afcf9c20-python
     r:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-6-merge-fd6915e5c6c1f0d0bcebd5ffedb61e36afcf9c20-r
-      memoryRequest: 29Gi
+      memoryRequest: 4Gi
       cpuRequest: 4000m
     replicaCount: 0
     sandboxId: martinfosco-ui10-worker6
