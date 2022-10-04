@@ -182,7 +182,7 @@ spec:
     datadogTags: kube_namespace:pipeline-agi-with-datadog
     memoryRequest: 4Gi
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-30-merge-b4ef7105d0bb8dba6c5a0b92cae1d043cfe40b14-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-30-merge-4c1fad62a3f8c9fd6ef63dfccede96978de3da88-pipeline-runner
     replicaCount: 0
     sandboxId: agi-with-datadog
     serviceAccount:
