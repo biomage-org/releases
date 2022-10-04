@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -139,9 +140,9 @@ spec:
     kubernetes:
       env: staging
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-2ba281ec816f6411d38a89eea2b22d40a55ad923-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-0a699c09d7c176d4f9381de38650b4419e7e1b89-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-2ba281ec816f6411d38a89eea2b22d40a55ad923-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-6c38116fa9552140ed2b7848a9d2bbadbca0cdea-r
       memoryRequest: 4Gi
     replicaCount: 0
     sandboxId: agi-with-datadog
