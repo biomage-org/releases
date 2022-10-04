@@ -35,8 +35,8 @@ spec:
     sandboxId: STAGING_SANDBOX_ID
     replicaCount: 0
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-5d8c284872695ac0499285e49bfa27b0a3926db1-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-0bbb151a52845e8379b672946c622d0862080afe-r
       memoryRequest: 4Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-5d8c284872695ac0499285e49bfa27b0a3926db1-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-0bbb151a52845e8379b672946c622d0862080afe-python
     datadogTags: kube_namespace:worker-STAGING_SANDBOX_ID
