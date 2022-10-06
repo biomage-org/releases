@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -181,7 +182,7 @@ spec:
     datadogTags: kube_namespace:pipeline-agi-datadog
     memoryRequest: 4Gi
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-30-merge-afaf9df6ae5ff116c37858a8ffad2683e398b17e-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-30-merge-1af46ccb27eac70c7fcbc6a36191fde98e9d5e58-pipeline-runner
     replicaCount: 0
     sandboxId: agi-datadog
     serviceAccount:
