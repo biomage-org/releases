@@ -25,7 +25,7 @@ spec:
   valuesFrom:
   - configMapKeyRef:
       name: account-config
-      namespace: flux
+      namespace: default
       key: account-config.yaml
   values:
     clusterEnv: staging
