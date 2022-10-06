@@ -22,7 +22,7 @@ spec:
     - configMapKeyRef:
         name: account-config
         namespace: flux
-        key: eks-account-config.yaml
+        key: account-config.yaml
   values:
     clusterEnv: staging
     pipelineRunner:
