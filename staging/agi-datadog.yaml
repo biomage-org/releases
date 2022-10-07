@@ -140,9 +140,9 @@ spec:
     kubernetes:
       env: staging
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-bf360e1820be3112a81b3f14bac3d69028475913-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-e86670f91ab137639139fdf48b174b613c6eb148-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-bf360e1820be3112a81b3f14bac3d69028475913-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-24-merge-e86670f91ab137639139fdf48b174b613c6eb148-r
       memoryRequest: 4Gi
     replicaCount: 0
     sandboxId: agi-datadog
