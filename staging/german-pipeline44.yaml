@@ -182,7 +182,7 @@ spec:
     datadogTags: kube_namespace:pipeline-german-pipeline44
     memoryRequest: 4Gi
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-44-merge-3caee47ffc09ca643004ac97dfd293dbb6b66f61-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-44-merge-900aa6f0323529bb92761fea4c81d9b4347f47c1-pipeline-runner
     replicaCount: 0
     sandboxId: german-pipeline44
     serviceAccount:
