@@ -106,8 +106,8 @@ spec:
       iamRole: api-role-staging
   valuesFrom:
   - configMapKeyRef:
-      key: account-config-2.yaml
-      name: account-config
+      key: account-config.yaml
+      name: account-config-2
       namespace: flux
 ---
 apiVersion: v1
