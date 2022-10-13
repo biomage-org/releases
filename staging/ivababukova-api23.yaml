@@ -189,5 +189,5 @@ spec:
   valuesFrom:
   - configMapKeyRef:
       key: account-config.yaml
-      name: account-config-2
+      name: account-config
       namespace: flux
