@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: ui-agi-ui69-api25-pipeline46
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-69-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: ui
+  namespace: ui-agi-ui69-api25-pipeline46
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: agi-ui69-api25-pipeline46
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-pull-69-merge-742a59fff95f1f5a914c827a654ebeec3e583887
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: api-agi-ui69-api25-pipeline46
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-25-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: api
+  namespace: api-agi-ui69-api25-pipeline46
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: agi-ui69-api25-pipeline46
+      repo: biomage-org/api
+      sandboxId: agi-ui69-api25-pipeline46
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-pull-25-merge-7c2a4ec329d18258e8e02ca899ca11d510a4fb7e
+    ingress:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: worker-agi-ui69-api25-pipeline46
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-heads-master-*-python
+    filter.fluxcd.io/r: glob:refs-heads-master-*-r
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: worker
+  namespace: worker-agi-ui69-api25-pipeline46
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: 12a901a2be90bee66e53adb229f2dbe29ee7f4c6
+  releaseName: worker
+  values:
+    datadogTags: kube_namespace:worker-agi-ui69-api25-pipeline46
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-12a901a2be90bee66e53adb229f2dbe29ee7f4c6-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-12a901a2be90bee66e53adb229f2dbe29ee7f4c6-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: agi-ui69-api25-pipeline46
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: pipeline-agi-ui69-api25-pipeline46
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-pull-46-merge-*-pipeline-runner
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: agi-ui69-api25-pipeline46
+  name: pipeline
+  namespace: pipeline-agi-ui69-api25-pipeline46
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: refs/pull/46/head
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    datadogTags: kube_namespace:pipeline-agi-ui69-api25-pipeline46
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-46-merge-005c01e4f3ec82847ab1a4b09c9881d7d08d1d37-pipeline-runner
+    replicaCount: 0
+    sandboxId: agi-ui69-api25-pipeline46
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
