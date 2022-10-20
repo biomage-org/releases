@@ -143,7 +143,7 @@ spec:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-28-merge-5981a0431a3964640a7cbbcd89a0608674819568-python
     r:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-28-merge-5981a0431a3964640a7cbbcd89a0608674819568-r
-      memoryRequest: 4Gi
+      memoryRequest: 28Gi
     replicaCount: 0
     sandboxId: martinfosco-ui68-api24-wor
     serviceAccount:
