@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: ahriman-api26
+  name: ui-ahriman-api26
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: ahriman-api26
+  name: ui
+  namespace: ui-ahriman-api26
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: b47b9f14e178931ad402f517ae999837c9466a5f
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: ahriman-api26
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-heads-master-17186e9dd6825c272e856ee7292e73907dd3f148
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: ahriman-api26
+  name: api-ahriman-api26
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-26-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: ahriman-api26
+  name: api
+  namespace: api-ahriman-api26
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: default
+      repo: biomage-org/api
+      sandboxId: ahriman-api26
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-pull-26-merge-6d4be48834800e6e640742738af54e3348a27c7c
+    ingress:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: ahriman-api26
+  name: worker-ahriman-api26
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-heads-master-*-python
+    filter.fluxcd.io/r: glob:refs-heads-master-*-r
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: ahriman-api26
+  name: worker
+  namespace: worker-ahriman-api26
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: e0af85017cf49177694e37fd1c0e5c7ab1d161b0
+  releaseName: worker
+  values:
+    datadogTags: kube_namespace:worker-ahriman-api26
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-e0af85017cf49177694e37fd1c0e5c7ab1d161b0-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-e0af85017cf49177694e37fd1c0e5c7ab1d161b0-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: ahriman-api26
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: ahriman-api26
+  name: pipeline-ahriman-api26
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: ahriman-api26
+  name: pipeline
+  namespace: pipeline-ahriman-api26
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: 1e5077de84d7dbe86831fd65464a831a672ec61b
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    datadogTags: kube_namespace:pipeline-ahriman-api26
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-1e5077de84d7dbe86831fd65464a831a672ec61b-pipeline-runner
+    replicaCount: 0
+    sandboxId: ahriman-api26
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
