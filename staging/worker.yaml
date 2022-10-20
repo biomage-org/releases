@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -23,10 +24,10 @@ spec:
     path: chart-infra/
     ref: e0af85017cf49177694e37fd1c0e5c7ab1d161b0
   valuesFrom:
-    - configMapKeyRef:
-        name: account-config
-        namespace: flux
-        key: account-config.yaml
+  - configMapKeyRef:
+      name: account-config
+      namespace: flux
+      key: account-config.yaml
   values:
     kubernetes:
       env: staging
@@ -38,5 +39,5 @@ spec:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-e0af85017cf49177694e37fd1c0e5c7ab1d161b0-r
       memoryRequest: 28Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-e0af85017cf49177694e37fd1c0e5c7ab1d161b0-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-a926825f3dd14a0ae6c88b9f19ecb310c40a7494-python
     datadogTags: kube_namespace:worker-default
