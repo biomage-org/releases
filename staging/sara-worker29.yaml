@@ -142,7 +142,7 @@ spec:
     python:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-29-merge-05a3341219607d22a22f4a9f92586c0648129bb8-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-29-merge-05a3341219607d22a22f4a9f92586c0648129bb8-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-29-merge-4ab37b4d8c58194efc1941ba7f81b8a8769a2630-r
       memoryRequest: 4Gi
     replicaCount: 0
     sandboxId: sara-worker29
