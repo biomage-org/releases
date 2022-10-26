@@ -20,7 +20,7 @@ spec:
   chart:
     git: https://github.com/biomage-org/pipeline
     path: chart-infra/
-    ref: c84eee26544858da39adfa7a46e0663df6c88f1f
+    ref: 3c0945788cc9c9d269514004750af38edfb49255
   valuesFrom:
     - configMapKeyRef:
         name: account-config
@@ -29,7 +29,7 @@ spec:
   values:
     clusterEnv: staging
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-c84eee26544858da39adfa7a46e0663df6c88f1f-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-3c0945788cc9c9d269514004750af38edfb49255-pipeline-runner
     sandboxId: default
     memoryRequest: 29Gi
     replicaCount: 1
