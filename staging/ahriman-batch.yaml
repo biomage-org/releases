@@ -10,7 +10,7 @@ kind: HelmRelease
 metadata:
   annotations:
     filter.fluxcd.io/chart-image: glob:refs-heads-master-*
-    fluxcd.io/automated: 'false'
+    fluxcd.io/automated: 'true'
   labels:
     sandboxId: ahriman-batch
   name: ui
@@ -19,7 +19,7 @@ spec:
   chart:
     git: https://github.com/biomage-org/iac
     path: charts/nodejs
-    ref: 01c9df81995ad34adc35b7b652c41246c8aa3934
+    ref: master
   releaseName: ui
   values:
     biomageCi:
