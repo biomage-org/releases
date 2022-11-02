@@ -180,7 +180,7 @@ spec:
   values:
     clusterEnv: staging
     datadogTags: kube_namespace:pipeline-martinfosco-ui79-api32-wor
-    memoryRequest: 4Gi
+    memoryRequest: 16Gi
     pipelineRunner:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-8176924ef43830d748cb7c7f0228c3384b019dd9-pipeline-runner
     replicaCount: 0
