@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: ui-martinfosco-worker39p
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: ui
+  namespace: ui-martinfosco-worker39p
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: e09b6ab39dc58bbdd8a1bbc8d53b378a4912a9cc
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: martinfosco-worker39p
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-heads-master-03d8904ed30e1ebbf522703d5c875dccfeae6a7c
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: api-martinfosco-worker39p
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: api
+  namespace: api-martinfosco-worker39p
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: e09b6ab39dc58bbdd8a1bbc8d53b378a4912a9cc
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: default
+      repo: biomage-org/api
+      sandboxId: martinfosco-worker39p
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-heads-master-3702d78d8b191128c48f474737d7449ea3a2befe
+    ingress:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: worker-martinfosco-worker39p
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-pull-39-merge-*-python
+    filter.fluxcd.io/r: glob:refs-pull-39-merge-*-r
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: worker
+  namespace: worker-martinfosco-worker39p
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: refs/pull/39/head
+  releaseName: worker
+  values:
+    datadogTags: kube_namespace:worker-martinfosco-worker39p
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-39-merge-34fe1192f171cac7848148aec9d258e04b9f5d1b-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-39-merge-34fe1192f171cac7848148aec9d258e04b9f5d1b-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: martinfosco-worker39p
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: pipeline-martinfosco-worker39p
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: martinfosco-worker39p
+  name: pipeline
+  namespace: pipeline-martinfosco-worker39p
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: f6c1e512e111288e4755095a1d28a14ba133d4a6
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    datadogTags: kube_namespace:pipeline-martinfosco-worker39p
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-f6c1e512e111288e4755095a1d28a14ba133d4a6-pipeline-runner
+    replicaCount: 0
+    sandboxId: martinfosco-worker39p
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
