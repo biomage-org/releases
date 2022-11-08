@@ -21,7 +21,7 @@ spec:
   chart:
     git: https://github.com/biomage-org/worker
     path: chart-infra/
-    ref: 3adae0dee11d5e32186fa298b19e426083e0479d
+    ref: 1e4c38e3d5bb6b00d90b208a9b71dce39b7e2c86
   valuesFrom:
     - configMapKeyRef:
         name: account-config
@@ -35,8 +35,8 @@ spec:
     sandboxId: default
     replicaCount: 2
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.34.0-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.34.1-r
       memoryRequest: 28Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.34.0-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.34.1-python
     datadogTags: kube_namespace:worker-default
