@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,12 +21,12 @@ spec:
   chart:
     git: https://github.com/biomage-org/worker
     path: chart-infra/
-    ref: 594ad22a67e317b0cf78518569b73d0fcddbb055
+    ref: 3adae0dee11d5e32186fa298b19e426083e0479d
   valuesFrom:
-  - configMapKeyRef:
-      name: account-config
-      namespace: flux
-      key: account-config.yaml
+    - configMapKeyRef:
+        name: account-config
+        namespace: flux
+        key: account-config.yaml
   values:
     kubernetes:
       env: staging
@@ -36,8 +35,8 @@ spec:
     sandboxId: default
     replicaCount: 0
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-594ad22a67e317b0cf78518569b73d0fcddbb055-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-3adae0dee11d5e32186fa298b19e426083e0479d-r
       memoryRequest: 28Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-4d55307e932d98639b74ca7ac26118fbead17445-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-3adae0dee11d5e32186fa298b19e426083e0479d-python
     datadogTags: kube_namespace:worker-default
