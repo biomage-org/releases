@@ -140,9 +140,9 @@ spec:
     kubernetes:
       env: staging
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-35-merge-b07a0234942da9b66ad6b6d6ef059cf6b1b02455-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-35-merge-96fbd094679085d9bb13341d4f3054ade2675857-python
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-35-merge-f1dd8a65110d8269ea8d9af3c360b534ead00261-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-35-merge-96fbd094679085d9bb13341d4f3054ade2675857-r
       memoryRequest: 18Gi
     replicaCount: 0
     sandboxId: martinfosco-ui79-api32-wor
