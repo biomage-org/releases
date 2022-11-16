@@ -1,0 +1,192 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: grasp6-api45
+  name: ui-grasp6-api45
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-heads-master-*
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: grasp6-api45
+  name: ui
+  namespace: ui-grasp6-api45
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: fe4003fde416762c05cddc66f5c4677e4fd8c517
+  releaseName: ui
+  values:
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: grasp6-api45
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-heads-master-d028f32312dc8a79b19e842f46c9292d0287d047
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    readinessProbe:
+      command:
+      - echo
+      - '0'
+      probeType: exec
+    replicaCount: 1
+    service:
+      additionalHosts: false
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: grasp6-api45
+  name: api-grasp6-api45
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/chart-image: glob:refs-pull-45-merge-*
+    fluxcd.io/automated: 'true'
+  labels:
+    sandboxId: grasp6-api45
+  name: api
+  namespace: api-grasp6-api45
+spec:
+  chart:
+    git: https://github.com/biomage-org/iac
+    path: charts/nodejs
+    ref: refs/heads/master
+  releaseName: api
+  values:
+    biomageCi:
+      rdsSandboxId: default
+      repo: biomage-org/api
+      sandboxId: grasp6-api45
+    hpa:
+      enabled: false
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-pull-45-merge-4e0b0c3409603510c3fa047432e50f14495e7f23
+    kubernetes:
+      env: staging
+    livenessProbe:
+      probeType: tcpSocket
+    loadBalancerHealthCheck:
+      path: /
+    readinessProbe:
+      path: /v2/health
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: grasp6-api45
+  name: worker-grasp6-api45
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/python: glob:refs-heads-master-*-python
+    filter.fluxcd.io/r: glob:refs-heads-master-*-r
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: grasp6-api45
+  name: worker
+  namespace: worker-grasp6-api45
+spec:
+  chart:
+    git: https://github.com/biomage-org/worker
+    path: chart-infra/
+    ref: ac34fb50ecac815aecfac3e84d5ee201dfa6d6c0
+  releaseName: worker
+  values:
+    datadogTags: kube_namespace:worker-grasp6-api45
+    kubernetes:
+      env: staging
+    python:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-ac34fb50ecac815aecfac3e84d5ee201dfa6d6c0-python
+    r:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-heads-master-ac34fb50ecac815aecfac3e84d5ee201dfa6d6c0-r
+      memoryRequest: 4Gi
+    replicaCount: 0
+    sandboxId: grasp6-api45
+    serviceAccount:
+      iamRole: worker-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    sandboxId: grasp6-api45
+  name: pipeline-grasp6-api45
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  annotations:
+    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
+    fluxcd.io/automated: 'false'
+  labels:
+    sandboxId: grasp6-api45
+  name: pipeline
+  namespace: pipeline-grasp6-api45
+spec:
+  chart:
+    git: https://github.com/biomage-org/pipeline
+    path: chart-infra/
+    ref: 54583d03eb17fab65b2d793dfd3731ada05889f7
+  releaseName: pipeline
+  values:
+    clusterEnv: staging
+    datadogTags: kube_namespace:pipeline-grasp6-api45
+    memoryRequest: 4Gi
+    pipelineRunner:
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-54583d03eb17fab65b2d793dfd3731ada05889f7-pipeline-runner
+    replicaCount: 0
+    sandboxId: grasp6-api45
+    serviceAccount:
+      iamRole: pipeline-role-staging
+  valuesFrom:
+  - configMapKeyRef:
+      key: account-config.yaml
+      name: account-config
+      namespace: flux
