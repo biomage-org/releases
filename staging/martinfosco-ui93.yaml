@@ -91,7 +91,7 @@ spec:
     livenessProbe:
       probeType: tcpSocket
     loadBalancerHealthCheck:
-      path: /v2/health
+      path: "/"
     readinessProbe:
       path: /v2/health
     replicaCount: 1
