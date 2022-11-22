@@ -33,10 +33,10 @@ spec:
     serviceAccount:
       iamRole: worker-role-staging
     sandboxId: STAGING_SANDBOX_ID
-    replicaCount: "0"
+    replicaCount: 0
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-42-merge-589003d5d31167f4570421a9e8f7a2a7135d6924-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-42-merge-3d23b687eb07523b976aeb0cbd28f4b87efcb237-r
       memoryRequest: 4Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-42-merge-589003d5d31167f4570421a9e8f7a2a7135d6924-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-42-merge-3d23b687eb07523b976aeb0cbd28f4b87efcb237-python
     datadogTags: kube_namespace:worker-STAGING_SANDBOX_ID
