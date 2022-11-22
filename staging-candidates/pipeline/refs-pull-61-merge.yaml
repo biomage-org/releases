@@ -29,10 +29,10 @@ spec:
   values:
     clusterEnv: staging
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-61-merge-edcfc08b9387774c936cace14682ef678414cb16-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-61-merge-b720a21df009ce91d2a27c4329ddef7df661d8ea-pipeline-runner
     sandboxId: STAGING_SANDBOX_ID
     memoryRequest: 4Gi
-    replicaCount: "0"
+    replicaCount: 0
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-STAGING_SANDBOX_ID
