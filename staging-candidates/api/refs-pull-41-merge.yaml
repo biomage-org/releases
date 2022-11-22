@@ -34,9 +34,8 @@ spec:
         cpu: "100m"
     hpa:
       enabled: false
-    ingress:
-      annotations:
-        alb.ingress.kubernetes.io/healthcheck-path: /v2/health
+    loadBalancerHealthCheck:
+      path: "/"
     kubernetes:
       env: staging
     biomageCi:
@@ -46,7 +45,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-41-merge-b3c1eae3429831f54c527036c40e2ecefe79b4e7
+      tag: refs-pull-41-merge-45ab872f5d0a8e3a1ba9faa65f137644d02470db
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
