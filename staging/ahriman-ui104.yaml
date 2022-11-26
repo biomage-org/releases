@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -42,7 +43,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-104-merge-edacb15202aab8217bcec0b54e12e8083dc46a05
+      tag: refs-pull-104-merge-4cde85d1555a7586e63a52239c325cf5cc3d6bd4
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
