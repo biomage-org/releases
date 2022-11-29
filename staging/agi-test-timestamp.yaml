@@ -186,7 +186,7 @@ spec:
   values:
     clusterEnv: staging
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-65-merge-8038fe7f1d188e1d8eac33cd053a756e6f81cb3a-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-65-merge-9ca15cbb02c4f8153be3b31a20bef33bec0ee68e-pipeline-runner
     sandboxId: agi-test-timestamp
     memoryRequest: 4Gi
     replicaCount: 0
