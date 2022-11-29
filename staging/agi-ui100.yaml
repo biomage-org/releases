@@ -42,7 +42,7 @@ spec:
       - echo
       - '0'
       probeType: exec
-    replicaCount: 2
+    replicaCount: 1
     service:
       additionalHosts: false
     serviceAccount:
