@@ -42,11 +42,12 @@ spec:
       - echo
       - '0'
       probeType: exec
-    replicaCount: 1
+    replicaCount: 2
     service:
       additionalHosts: false
     serviceAccount:
       iamRole: ui-role-staging
+    additionalField: 'testing'
   valuesFrom:
   - configMapKeyRef:
       key: account-config.yaml
