@@ -149,10 +149,10 @@ spec:
     sandboxId: agi-test-timestamp
     replicaCount: 0
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-72f2cd1388988b9ca4d91b9a5a2e62db131faf17-1669635177-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-3da4819a5834f676701141d9c7b3ef059a971c40-1669734286-r
       memoryRequest: 4Gi
     python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-72f2cd1388988b9ca4d91b9a5a2e62db131faf17-1669635177-python
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-3da4819a5834f676701141d9c7b3ef059a971c40-1669734286-python
     datadogTags: kube_namespace:worker-agi-test-timestamp
 ---
 apiVersion: v1
