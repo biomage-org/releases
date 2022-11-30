@@ -149,7 +149,7 @@ spec:
     sandboxId: agi-test-timestamp
     replicaCount: 0
     r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-3da4819a5834f676701141d9c7b3ef059a971c40-1669734286-r
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-6c1c0b6030667a2b386c56b7a6706e50b2e76411-1669796392-r
       memoryRequest: 4Gi
     python:
       image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-50-merge-3da4819a5834f676701141d9c7b3ef059a971c40-1669734286-python
@@ -186,7 +186,7 @@ spec:
   values:
     clusterEnv: staging
     pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-65-merge-9ca15cbb02c4f8153be3b31a20bef33bec0ee68e-pipeline-runner
+      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-pull-65-merge-ec3da90e16d3340527ce9c6aa28a0081240810ab-pipeline-runner
     sandboxId: agi-test-timestamp
     memoryRequest: 4Gi
     replicaCount: 0
