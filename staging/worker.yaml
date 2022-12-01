@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/worker
   ref:
-    branch: ab0951314c420fefbdb8c1d26c1868d735c95de9
+    branch: master
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -33,6 +33,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: worker
+    namespace: worker-default
   filterTags:
     pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
     extract: $timestamp
