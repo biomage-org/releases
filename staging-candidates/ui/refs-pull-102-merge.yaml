@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: fix-diff-expr
+    branch: master
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -96,7 +96,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-102-merge-31ebe9dd2b3122c2cb6d224d833a51b277556621-1669895976 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
+      tag: refs-pull-102-merge-61563f1e936ad21c9da52cc5640a109fd7d2445d-1669902081 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
