@@ -33,6 +33,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: ui
+    namespace: ui-default
   filterTags:
     pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)$
     extract: $timestamp
