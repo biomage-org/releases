@@ -33,6 +33,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: pipeline
+    namespace: pipeline-STAGING_SANDBOX_ID
   filterTags:
     pattern: ^refs-pull-74-merge-[a-f0-9]+-pipeline-runner-(?P<timestamp>[0-9]+)
     extract: $timestamp
@@ -81,7 +82,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-74-merge-faacd0662585759d63b89bc2581108545dbe4ba1-pipeline-runner-1669889557 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
+      tag: refs-pull-74-merge-251cecc139f52578428959a9e4c4e5028af1b362-pipeline-runner-1669890933 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
