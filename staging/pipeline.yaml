@@ -5,34 +5,89 @@ metadata:
   labels:
     sandboxId: default
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: pipeline-chart
+  namespace: pipeline-default
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/pipeline
+  ref:
+    branch: e08487dd7d8b4edad70dd51520be490ac4f897d1
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: pipeline
+  namespace: pipeline-default
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: pipeline
+  namespace: pipeline-default
+spec:
+  imageRepositoryRef:
+    name: pipeline
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-pipeline-runner-(?P<timestamp>[0-9]+)
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pipeline-image-update
+  namespace: pipeline-default
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Pipeline image update
+        email: ci@biomage.net
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: pipeline
   namespace: pipeline-default
-  annotations:
-    fluxcd.io/automated: "true"
-    filter.fluxcd.io/pipelineRunner: glob:refs-heads-master-*-pipeline-runner
   labels:
     sandboxId: default
 spec:
   releaseName: pipeline
+  interval: 2m0s
   chart:
-    git: https://github.com/biomage-org/pipeline
-    path: chart-infra/
-    ref: c24494bb73d6824c1845c8965fbc52c4d823103f
-  valuesFrom:
-    - configMapKeyRef:
-        name: account-config
-        namespace: flux
-        key: account-config.yaml
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: pipeline-chart
+        namespace: pipeline-default
   values:
-    clusterEnv: staging
-    pipelineRunner:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline:refs-heads-master-c24494bb73d6824c1845c8965fbc52c4d823103f-pipeline-runner
-    sandboxId: default
-    memoryRequest: 29Gi
     replicaCount: 0
+    clusterEnv: staging
+    sandboxId: default
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: pipeline
+      tag: refs-heads-master-e08487dd7d8b4edad70dd51520be490ac4f897d1-pipeline-runner-1669884262 # {"$imagepolicy": "pipeline-default:pipeline:tag"}
+    memoryRequest: 29Gi
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-default
+  valuesFrom:
+    - kind: ConfigMap
+      valuesKey: account-config.yaml
+      name: account-config
+      optional: false
