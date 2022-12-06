@@ -57,6 +57,9 @@ spec:
       author:
         name: Flux - Pipeline image update
         email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -82,7 +85,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-79-merge-5abda349b79a8516b9deff7436a2f0117e79419d-pipeline-runner-1670314612 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
+      tag: refs-pull-79-merge-0c4bcc4325e998f585afe41c8b4c5d5f155901fa-pipeline-runner-1670353920 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
