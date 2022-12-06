@@ -14,7 +14,6 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/worker
   ref:
-    branch: FILLED_IN_BY_CI
     commit: 9e98da75fb6d1c5dd57fb5c943a71be5102b58ba
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
