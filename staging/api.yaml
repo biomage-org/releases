@@ -58,7 +58,7 @@ spec:
         email: ci@biomage.net
   update:
     strategy: Setters
-    path: "./staging"
+    path: ./staging
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
