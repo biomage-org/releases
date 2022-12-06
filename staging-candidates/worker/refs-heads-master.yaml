@@ -72,6 +72,9 @@ spec:
       author:
         name: Flux - Worker image update
         email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -97,13 +100,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-heads-master-2845664d4c8b7bf3389e3e3540e834eb9f2eaa8b-1669998152-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
+        tag: refs-heads-master-9e98da75fb6d1c5dd57fb5c943a71be5102b58ba-1670332987-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-heads-master-2845664d4c8b7bf3389e3e3540e834eb9f2eaa8b-1669998152-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
+        tag: refs-heads-master-9e98da75fb6d1c5dd57fb5c943a71be5102b58ba-1670332987-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
