@@ -15,7 +15,7 @@ spec:
   url: https://github.com/biomage-org/pipeline
   ref:
     branch: FILLED_IN_BY_CI
-    commit: afc4ba2727d6f46cee61a50e3b0a2a762bea8b0d
+    commit: 4871b0829ebb11baf0aeb8b092a4b7f5220ae006
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -58,6 +58,9 @@ spec:
       author:
         name: Flux - Pipeline image update
         email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./production
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -83,7 +86,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-heads-master-4871b0829ebb11baf0aeb8b092a4b7f5220ae006-pipeline-runner-1670333052 # {"$imagepolicy": "pipeline-default:pipeline:tag"}
+      tag: refs-tags-0.38.1-pipeline-runner # {"$imagepolicy": "pipeline-default:pipeline:tag"}
     memoryRequest: 29Gi
     serviceAccount:
       iamRole: pipeline-role-production
