@@ -14,7 +14,6 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/pipeline
   ref:
-    branch: FILLED_IN_BY_CI
     commit: 4871b0829ebb11baf0aeb8b092a4b7f5220ae006
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
