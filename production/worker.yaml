@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -6,38 +5,113 @@ metadata:
   labels:
     sandboxId: default
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: worker-chart
+  namespace: worker-default
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/worker
+  ref:
+    branch: FILLED_IN_BY_CI
+    commit: 2845664d4c8b7bf3389e3e3540e834eb9f2eaa8b
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: worker
+  namespace: worker-default
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: worker-r
+  namespace: worker-default
+spec:
+  imageRepositoryRef:
+    name: worker
+    namespace: worker-default
+  filterTags:
+    pattern: ^refs-tags-(?P<version>[0-9]+\.[0-9]+\.[0-9]+)-r$
+    extract: $version
+  policy:
+    semver:
+      range: '>=0.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: worker-python
+  namespace: worker-default
+spec:
+  imageRepositoryRef:
+    name: worker
+  filterTags:
+    pattern: ^refs-tags-(?P<version>[0-9]+\.[0-9]+\.[0-9]+)-python$
+    extract: $version
+  policy:
+    semver:
+      range: '>=0.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: worker-image-update
+  namespace: worker-default
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Worker image update
+        email: ci@biomage.net
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: worker
   namespace: worker-default
-  annotations:
-    fluxcd.io/automated: "true"
-    filter.fluxcd.io/r: glob:refs-tags-*-r
-    filter.fluxcd.io/python: glob:refs-tags-*-python
   labels:
     sandboxId: default
 spec:
   releaseName: worker
+  interval: 2m0s
   chart:
-    git: https://github.com/biomage-org/worker
-    path: chart-infra/
-    ref: 3c6c3ce43acbff2ffde76b9e82db24bf40a318e0
-  valuesFrom:
-  - configMapKeyRef:
-      name: account-config
-      namespace: flux
-      key: account-config.yaml
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: worker-chart
+        namespace: worker-default
   values:
+    sandboxId: default
+    replicaCount: 2
+    r:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-tags-0.36.0-r # {"$imagepolicy": "worker-default:worker-r:tag"}
+      memoryRequest: 28Gi
+    python:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-tags-0.36.0-python # {"$imagepolicy": "worker-default:worker-python:tag"}
     kubernetes:
       env: production
     serviceAccount:
       iamRole: worker-role-production
-    sandboxId: default
-    replicaCount: 2
-    r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.35.2-r
-      memoryRequest: 28Gi
-    python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-tags-0.35.1-python
     datadogTags: kube_namespace:worker-default
+  valuesFrom:
+    - kind: ConfigMap
+      valuesKey: account-config.yaml
+      name: account-config
+      optional: false
