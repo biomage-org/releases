@@ -57,6 +57,9 @@ spec:
       author:
         name: Flux - UI image update
         email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./production
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -96,7 +99,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-heads-master-c496ebaf2fdbdda2bb7efaacc26b08fd4ab29e02-1670258944 # {"$imagepolicy": "ui-default:ui:tag"}
+      tag: 0.61.1 # {"$imagepolicy": "ui-default:ui:tag"}
     replicaCount: 4
     serviceAccount:
       iamRole: ui-role-production
