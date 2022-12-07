@@ -327,7 +327,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-heads-master-9a9e16baa9ce99a67e97951ac501b92e7ef7ad75-1670342188-r # {"$imagepolicy": "worker-ahriman-api64-pipeline79:worker-r:tag"}
-      memoryRequest: 64Gi
+      memoryRequest: 40Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
