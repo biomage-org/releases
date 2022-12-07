@@ -57,6 +57,9 @@ spec:
       author:
         name: Flux - UI image update
         email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -96,7 +99,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-120-merge-44b2dd5316f9a6c23d8adddbe966444460f2ef5c-1670262777 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
+      tag: refs-pull-120-merge-0f74a68fc727f7425db80cac3efd91ea74dac8af-1670420714 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
