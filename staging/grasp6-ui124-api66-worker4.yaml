@@ -108,7 +108,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
@@ -323,13 +323,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-47-merge-e067d7bd5dde4e74e235d1dc10ab029014953055-1670016444-r # {"$imagepolicy": "worker-grasp6-ui124-api66-worker4:worker-r:tag"}
+        tag: refs-pull-47-merge-650735aa65cdef67c552d6bc6bd3fe83fcd45336-1670423920-r # {"$imagepolicy": "worker-grasp6-ui124-api66-worker4:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-47-merge-e067d7bd5dde4e74e235d1dc10ab029014953055-1670016444-python # {"$imagepolicy": "worker-grasp6-ui124-api66-worker4:worker-python:tag"}
+        tag: refs-pull-47-merge-650735aa65cdef67c552d6bc6bd3fe83fcd45336-1670423920-python # {"$imagepolicy": "worker-grasp6-ui124-api66-worker4:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
