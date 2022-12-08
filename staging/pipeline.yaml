@@ -78,6 +78,7 @@ spec:
         kind: GitRepository
         name: pipeline-chart
         namespace: pipeline-default
+      reconcileStrategy: Revision
   values:
     replicaCount: 0
     clusterEnv: staging
