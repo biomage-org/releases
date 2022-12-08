@@ -78,6 +78,7 @@ spec:
         kind: GitRepository
         name: ui-chart
         namespace: ui-default
+      reconcileStrategy: Revision
   values:
     # disable readiness probes as load balancer performs
     # its own health checks/cordoning
@@ -99,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-heads-master-6e06072c3d0ee3a12a09da78a67de794ec894b85-1670499199 # {"$imagepolicy": "ui-default:ui:tag"}
+      tag: refs-heads-master-4caf19bee560fe59c983574a7e96f8269b70e1c2-1670533281 # {"$imagepolicy": "ui-default:ui:tag"}
     replicaCount: 2
     serviceAccount:
       iamRole: ui-role-staging
