@@ -319,13 +319,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-47-merge-650735aa65cdef67c552d6bc6bd3fe83fcd45336-1670423920-r # {"$imagepolicy": "worker-german-worker47:worker-r:tag"}
+        tag: refs-pull-47-merge-97f8312d51afb81b2c1f800b5da9b69aa92942e9-1670498464-r # {"$imagepolicy": "worker-german-worker47:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-47-merge-650735aa65cdef67c552d6bc6bd3fe83fcd45336-1670423920-python # {"$imagepolicy": "worker-german-worker47:worker-python:tag"}
+        tag: refs-pull-47-merge-97f8312d51afb81b2c1f800b5da9b69aa92942e9-1670498464-python # {"$imagepolicy": "worker-german-worker47:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
