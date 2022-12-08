@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/pipeline
   ref:
-    commit: 36a8d8811067497ed6276801df7e251e3b644d64
+    commit: 130a99645472a58b8ed4e1653ad0ee063d36db74
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -78,6 +78,7 @@ spec:
         kind: GitRepository
         name: pipeline-chart
         namespace: pipeline-default
+      reconcileStrategy: Revision
   values:
     replicaCount: 3
     clusterEnv: production
