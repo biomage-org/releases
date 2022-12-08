@@ -101,7 +101,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-heads-master-bc282e07617b9d4447643620df7e7fceb4c5d2ca-1670498078-r # {"$imagepolicy": "worker-default:worker-r:tag"}
-      memoryRequest: 28Gi
+      memoryRequest: 20Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
