@@ -77,6 +77,7 @@ spec:
         kind: GitRepository
         name: api-chart
         namespace: api-STAGING_SANDBOX_ID
+      reconcileStrategy: Revision
   values:
     service:
       externalPort: 3000
@@ -101,7 +102,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-70-merge-948ae02d6b6251778a29463607d3201dd66b92f8-1670509440 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
+      tag: refs-pull-70-merge-942b982b2e29f726de602cbe95a4b9313c9a90ff-1670593694 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
