@@ -110,7 +110,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
@@ -216,7 +216,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-74-merge-57310f6a9bce1b9ba0bcae1367e6a3488a04c05c-1670579360 # {"$imagepolicy": "api-ahriman-api74:api:tag"}
+      tag: refs-pull-74-merge-22f7a9a2354905a65fd0753bb99cf24051e4751f-1670585951 # {"$imagepolicy": "api-ahriman-api74:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
