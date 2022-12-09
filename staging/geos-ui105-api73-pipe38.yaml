@@ -328,7 +328,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-heads-master-8974292f90cab42e318afbd746e219833d2455be-1670504388-r # {"$imagepolicy": "worker-geos-ui105-api73-pipe38:worker-r:tag"}
-      memoryRequest: 4Gi
+      memoryRequest: 28Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
@@ -434,7 +434,7 @@ spec:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
       tag: refs-pull-78-merge-b2624534373122e9d03b90ce7f7e9b3589c8e8e6-pipeline-runner-1670517841 # {"$imagepolicy": "pipeline-geos-ui105-api73-pipe38:pipeline:tag"}
-    memoryRequest: 4Gi
+    memoryRequest: 29Gi
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-geos-ui105-api73-pipe38
