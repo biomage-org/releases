@@ -62,7 +62,7 @@ metadata:
   name: worker-image-update
   namespace: worker-default
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system

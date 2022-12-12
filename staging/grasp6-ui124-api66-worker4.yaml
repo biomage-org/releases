@@ -47,7 +47,7 @@ metadata:
   name: ui-image-update
   namespace: ui-grasp6-ui124-api66-worker4
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -158,7 +158,7 @@ metadata:
   name: api-image-update
   namespace: api-grasp6-ui124-api66-worker4
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -288,7 +288,7 @@ metadata:
   name: worker-image-update
   namespace: worker-grasp6-ui124-api66-worker4
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -390,7 +390,7 @@ metadata:
   name: pipeline-image-update
   namespace: pipeline-grasp6-ui124-api66-worker4
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system

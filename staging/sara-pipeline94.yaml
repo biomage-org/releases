@@ -47,7 +47,7 @@ metadata:
   name: ui-image-update
   namespace: ui-sara-pipeline94
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -160,7 +160,7 @@ metadata:
   name: api-image-update
   namespace: api-sara-pipeline94
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -292,7 +292,7 @@ metadata:
   name: worker-image-update
   namespace: worker-sara-pipeline94
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -399,7 +399,7 @@ metadata:
   name: pipeline-image-update
   namespace: pipeline-sara-pipeline94
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -47,7 +47,7 @@ metadata:
   name: ui-image-update
   namespace: ui-agi-api75
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -160,7 +160,7 @@ metadata:
   name: api-image-update
   namespace: api-agi-api75
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -291,7 +291,7 @@ metadata:
   name: worker-image-update
   namespace: worker-agi-api75
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -398,7 +398,7 @@ metadata:
   name: pipeline-image-update
   namespace: pipeline-agi-api75
 spec:
-  interval: 2m0s
+  interval: 3m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
