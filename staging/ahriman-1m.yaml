@@ -110,7 +110,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
@@ -438,7 +438,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-95-merge-b28b8d3b2dde7d8156f3c659b5f151d182326e7d-pipeline-runner-1670930211 # {"$imagepolicy": "pipeline-ahriman-1m:pipeline:tag"}
+      tag: refs-pull-95-merge-56aa12794eefbd934a63d18fa441297b721d36f6-pipeline-runner-1670952851 # {"$imagepolicy": "pipeline-ahriman-1m:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
