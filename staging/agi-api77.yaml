@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    commit: d73b85aade969f35f7cf3a69b709ee61be8013ed
+    branch: add-ingress-scheme-annotation
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -128,7 +128,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: master
+    branch: add-ingress-scheme-annotation
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
