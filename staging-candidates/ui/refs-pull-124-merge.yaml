@@ -78,6 +78,7 @@ spec:
         kind: GitRepository
         name: ui-chart
         namespace: ui-STAGING_SANDBOX_ID
+      reconcileStrategy: Revision
   values:
     # disable readiness probes as load balancer performs
     # its own health checks/cordoning
@@ -99,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-124-merge-ac1754dccb38c6d55ba8c2ae8b1960203b214fda-1670501322 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
+      tag: refs-pull-124-merge-674adaa4f42243834490a4fd7d2f76b24f882500-1671102812 # {"$imagepolicy": "ui-STAGING_SANDBOX_ID:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
