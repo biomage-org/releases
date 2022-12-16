@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: add-ingress-scheme-annotation
+    branch: add-self-signed-cert-option
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -128,7 +128,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: add-ingress-scheme-annotation
+    branch: add-self-signed-cert-option
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
