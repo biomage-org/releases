@@ -213,7 +213,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-73-merge-89bdd2d81c9c748af1b09618597241ded659dc49-1670518746 # {"$imagepolicy": "api-geos-ui105-api73-pipe38:api:tag"}
+      tag: refs-pull-73-merge-3d475a2fad59c255b5bf42678a8d6c26d911096c-1671550630 # {"$imagepolicy": "api-geos-ui105-api73-pipe38:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
