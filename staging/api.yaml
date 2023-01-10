@@ -11,7 +11,7 @@ metadata:
   name: api-chart
   namespace: api-default
 spec:
-  interval: 5m0s
+  interval: 1m0s
   url: https://github.com/biomage-org/iac
   ref:
     branch: event-exporter-policy-sns
