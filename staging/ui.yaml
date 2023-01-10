@@ -100,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-heads-master-068812e9266cb41405b0fec3d4a7281b1bd80c38-1673348270 # {"$imagepolicy": "ui-default:ui:tag"}
+      tag: refs-heads-master-ed64f80542f9cd6d8f2c3e8a87aaf9e6cdb6352e-1673365483 # {"$imagepolicy": "ui-default:ui:tag"}
     replicaCount: 2
     serviceAccount:
       iamRole: ui-role-staging
