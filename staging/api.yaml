@@ -14,7 +14,7 @@ spec:
   interval: 1m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: event-exporter-policy-sns
+    branch: master
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
