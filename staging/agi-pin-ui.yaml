@@ -123,7 +123,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    commit: c4715cee72706db3518bc99f3d4891236e4f745f
+    branch: event-exporter-send-apiurl
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
