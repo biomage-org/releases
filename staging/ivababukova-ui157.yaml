@@ -100,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-157-merge-d2743f6424e25cfb680206b8f365865cc3b306ef-1674470422 # {"$imagepolicy": "ui-ivababukova-ui157:ui:tag"}
+      tag: refs-pull-157-merge-994e32b0c335a46e8906837e7f2b1403fa8a8452-1674554810 # {"$imagepolicy": "ui-ivababukova-ui157:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
