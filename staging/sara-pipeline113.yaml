@@ -438,7 +438,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-113-merge-0f41082800fb9d344097de8695b0defd39865c34-pipeline-runner-1674640161 # {"$imagepolicy": "pipeline-sara-pipeline113:pipeline:tag"}
+      tag: refs-pull-113-merge-92849ec9837772bffc2b42615863cbffbffd456c-pipeline-runner-1674650833 # {"$imagepolicy": "pipeline-sara-pipeline113:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
