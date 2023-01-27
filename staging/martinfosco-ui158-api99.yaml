@@ -100,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-158-merge-6bccfcfa90323d19e15c9b4ab9224a9a5eab68d7-1674839724 # {"$imagepolicy": "ui-martinfosco-ui158-api99:ui:tag"}
+      tag: refs-pull-158-merge-57a4ea0690f801eca2b6df1193fb7a2d59ea7445-1674846898 # {"$imagepolicy": "ui-martinfosco-ui158-api99:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
