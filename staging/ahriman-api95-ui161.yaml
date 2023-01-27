@@ -100,7 +100,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-161-merge-4aef3fd6958676844e3a34b116c420fa0f3b13ae-1674812703 # {"$imagepolicy": "ui-ahriman-api95-ui161:ui:tag"}
+      tag: refs-pull-161-merge-81f21d706a805a53ae3d99c19b31ff7ffb98a789-1674817222 # {"$imagepolicy": "ui-ahriman-api95-ui161:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
