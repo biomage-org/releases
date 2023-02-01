@@ -215,7 +215,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-91-merge-ef8ee17598070b20db6b539ca0e4103c78b07aa2-1675272254 # {"$imagepolicy": "api-martinfosco-ui151-api91:api:tag"}
+      tag: refs-pull-91-merge-5ace8aa934b264fe426480b81f4b979b838ceeac-1675273972 # {"$imagepolicy": "api-martinfosco-ui151-api91:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
