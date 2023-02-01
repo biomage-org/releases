@@ -109,7 +109,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
@@ -215,7 +215,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-103-merge-857eab55153a158c68f7cc7387cfcf8fd8dde36d-1675096766 # {"$imagepolicy": "api-martinfosco-ui165-api103:api:tag"}
+      tag: refs-pull-103-merge-40148fbfe01360acc65f13574023a2db8e0b07cb-1675273361 # {"$imagepolicy": "api-martinfosco-ui165-api103:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
