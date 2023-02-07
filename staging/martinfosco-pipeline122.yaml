@@ -439,7 +439,7 @@ spec:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
       tag: refs-pull-122-merge-2176e0ace2b5150c9530dcfa9cbb61e121cb8e2f-pipeline-runner-1675793000 # {"$imagepolicy": "pipeline-martinfosco-pipeline122:pipeline:tag"}
-    memoryRequest: 4Gi
+    memoryRequest: 28Gi
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-martinfosco-pipeline122
