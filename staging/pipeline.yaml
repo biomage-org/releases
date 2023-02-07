@@ -86,7 +86,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-heads-master-439dbb2753b5693cf8a8fc75fe7560e108869906-pipeline-runner-1675436445 # {"$imagepolicy": "pipeline-default:pipeline:tag"}
+      tag: refs-heads-master-9ce1aa15d7ffbad3dba4d697baa8fcf9982cf7c0-pipeline-runner-1675769989 # {"$imagepolicy": "pipeline-default:pipeline:tag"}
     memoryRequest: 16Gi
     serviceAccount:
       iamRole: pipeline-role-staging
