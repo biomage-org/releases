@@ -1,0 +1,450 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ui-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: ui-chart
+  namespace: ui-agi-lambda-rollout
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    branch: master
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: ui
+  namespace: ui-agi-lambda-rollout
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/ui
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: ui
+  namespace: ui-agi-lambda-rollout
+spec:
+  imageRepositoryRef:
+    name: ui
+    namespace: ui-agi-lambda-rollout
+  filterTags:
+    pattern: ^refs-pull-142-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: ui-image-update
+  namespace: ui-agi-lambda-rollout
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - UI image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ui
+  namespace: ui-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+spec:
+  releaseName: ui
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: ui-chart
+        namespace: ui-agi-lambda-rollout
+      reconcileStrategy: Revision
+  values:
+    # disable readiness probes as load balancer performs
+    # its own health checks/cordoning
+    readinessProbe:
+      probeType: exec
+      command: [echo, '0']
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    livenessProbe:
+      probeType: tcpSocket
+    service:
+      additionalHosts: false
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: agi-lambda-rollout
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-pull-142-merge-9339f559dab03ee99383ce27ddf50b74a56a31fd-1673353946 # {"$imagepolicy": "ui-agi-lambda-rollout:ui:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+      # filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: api-chart
+  namespace: api-agi-lambda-rollout
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    commit: 44d22fd86f935fc233f3d6cba9be1e7546941439
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: api
+  namespace: api-agi-lambda-rollout
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/api
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: api
+  namespace: api-agi-lambda-rollout
+spec:
+  imageRepositoryRef:
+    name: api
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: api-image-update
+  namespace: api-agi-lambda-rollout
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - API image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: api
+  namespace: api-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+spec:
+  releaseName: api
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: api-chart
+        namespace: api-agi-lambda-rollout
+      reconcileStrategy: Revision
+  values:
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    readinessProbe:
+      path: /v2/health
+    livenessProbe:
+      probeType: tcpSocket
+    resources:
+      requests:
+        cpu: 100m
+    hpa:
+      enabled: false
+    loadBalancerHealthCheck:
+      path: /
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/api
+      sandboxId: agi-lambda-rollout
+      rdsSandboxId: default
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-heads-master-da1cbdac73416c17eda4d52d8cad30df0ca0b172-1675436544 # {"$imagepolicy": "api-agi-lambda-rollout:api:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+# filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: worker-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: worker-chart
+  namespace: worker-agi-lambda-rollout
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/worker
+  ref:
+    commit: d0aad7e599048669eeeb2dd0c18a657da612d151
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: worker
+  namespace: worker-agi-lambda-rollout
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: worker-r
+  namespace: worker-agi-lambda-rollout
+spec:
+  imageRepositoryRef:
+    name: worker
+    namespace: worker-agi-lambda-rollout
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: worker-python
+  namespace: worker-agi-lambda-rollout
+spec:
+  imageRepositoryRef:
+    name: worker
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-python$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: worker-image-update
+  namespace: worker-agi-lambda-rollout
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Worker image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: worker
+  namespace: worker-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+spec:
+  releaseName: worker
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: worker-chart
+        namespace: worker-agi-lambda-rollout
+      reconcileStrategy: Revision
+  values:
+    sandboxId: agi-lambda-rollout
+    replicaCount: 0
+    r:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-d0aad7e599048669eeeb2dd0c18a657da612d151-1674733395-r # {"$imagepolicy": "worker-agi-lambda-rollout:worker-r:tag"}
+      memoryRequest: 4Gi
+    python:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-d0aad7e599048669eeeb2dd0c18a657da612d151-1674733395-python # {"$imagepolicy": "worker-agi-lambda-rollout:worker-python:tag"}
+    kubernetes:
+      env: staging
+    serviceAccount:
+      iamRole: worker-role-staging
+    datadogTags: kube_namespace:worker-agi-lambda-rollout
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pipeline-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: pipeline-chart
+  namespace: pipeline-agi-lambda-rollout
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/pipeline
+  ref:
+    commit: 9ce1aa15d7ffbad3dba4d697baa8fcf9982cf7c0
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-lambda-rollout
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-lambda-rollout
+spec:
+  imageRepositoryRef:
+    name: pipeline
+    namespace: pipeline-agi-lambda-rollout
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-pipeline-runner-(?P<timestamp>[0-9]+)
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pipeline-image-update
+  namespace: pipeline-agi-lambda-rollout
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Pipeline image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-lambda-rollout
+  labels:
+    sandboxId: agi-lambda-rollout
+spec:
+  releaseName: pipeline
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: pipeline-chart
+        namespace: pipeline-agi-lambda-rollout
+      reconcileStrategy: Revision
+  values:
+    replicaCount: 0
+    clusterEnv: staging
+    sandboxId: agi-lambda-rollout
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: pipeline
+      tag: refs-heads-master-9ce1aa15d7ffbad3dba4d697baa8fcf9982cf7c0-pipeline-runner-1675769989 # {"$imagepolicy": "pipeline-agi-lambda-rollout:pipeline:tag"}
+    memoryRequest: 4Gi
+    serviceAccount:
+      iamRole: pipeline-role-staging
+    datadogTags: kube_namespace:pipeline-agi-lambda-rollout
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
