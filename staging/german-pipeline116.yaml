@@ -333,7 +333,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-heads-master-d0aad7e599048669eeeb2dd0c18a657da612d151-1674733395-r # {"$imagepolicy": "worker-german-pipeline116:worker-r:tag"}
-      memoryRequest: 4Gi
+      memoryRequest: 28Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
@@ -439,7 +439,7 @@ spec:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
       tag: refs-pull-116-merge-c652c085ba396e9afca08d2c0c9cb273f474d739-pipeline-runner-1675994055 # {"$imagepolicy": "pipeline-german-pipeline116:pipeline:tag"}
-    memoryRequest: 4Gi
+    memoryRequest: 29Gi
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-german-pipeline116
