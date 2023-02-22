@@ -331,7 +331,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-pull-71-merge-a20cdf7004b2ea9e2418e59f1bd8deeb6391293d-1677058095-r # {"$imagepolicy": "worker-ahriman-ui186-worker71:worker-r:tag"}
-      memoryRequest: 4Gi
+      memoryRequest: 44Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
