@@ -13,7 +13,7 @@ patches:
         name: image-reflector-controller
         namespace: flux-system
         annotations:
-          eks.amazonaws.com/role-arn:arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
+          eks.amazonaws.com/role-arn: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
     target:
       kind: ServiceAccount
       name: image-reflector-controller
