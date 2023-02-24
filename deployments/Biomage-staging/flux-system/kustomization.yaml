@@ -8,8 +8,7 @@ resources:
 patches:
   - target:
       version: v1
-      group: apps
-      kind: Deployment
+      kind: ServiceAccount
       name: image-reflector-controller
       namespace: flux-system
     patch: |-
