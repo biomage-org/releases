@@ -14,5 +14,5 @@ patches:
       namespace: flux-system
     patch: |-
       - op: add
-        path: /metadata/annotations/eks.amazonaws.com/role-arn
-        value: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
+        path: /metadata/annotations
+        value: eks.amazonaws.com/role-arn: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
