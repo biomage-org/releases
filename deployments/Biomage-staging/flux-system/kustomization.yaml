@@ -6,14 +6,13 @@ resources:
 
 # allow image-reflector pod to access ECR
 patches:
-  - patch: |
-      apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: image-reflector-controller
-        namespace: flux-system
-        annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
-    target:
-      kind: ServiceAccount
+  - target:
+      version: v1
+      group: apps
+      kind: Deployment
       name: image-reflector-controller
+      namespace: flux-system
+    patch: |-
+      - op: add
+        path: /metadata/annotations/-
+        value: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
