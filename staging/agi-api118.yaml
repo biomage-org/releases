@@ -16,7 +16,7 @@ spec:
   ref:
     commit: 4f6136c238fdabe8bc39048989c91e3c7d4fdf51
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: ui
@@ -24,8 +24,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/ui
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: ui
@@ -246,7 +247,7 @@ spec:
   ref:
     commit: 9e313ac5f1ddb59945601a09919ce4fb046f3525
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: worker
@@ -254,8 +255,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-r
@@ -271,7 +273,7 @@ spec:
     numerical:
       order: asc
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-python
@@ -368,7 +370,7 @@ spec:
   ref:
     commit: a88f9ceb07a6ccef9cb66666a837f220ab23b833
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: pipeline
@@ -376,8 +378,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: pipeline
