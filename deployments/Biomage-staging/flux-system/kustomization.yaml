@@ -5,14 +5,14 @@ resources:
   - gotk-sync.yaml
 
 # allow image-reflector pod to access ECR
-# patches:
-#   - target:
-#       version: v1
-#       group: apps
-#       kind: Deployment
-#       name: image-reflector-controller
-#       namespace: flux-system
-#     patch: |-
-#       - op: add
-#         path: /metadata/annotations/eks.amazonaws.com~1role-arn
-#         value: arn:aws:iam::242905224710:role/eksctl-biomage-staging-nodegroup-NodeInstanceRole-16Y7P8SITYYY2
+patches:
+  - patch: |
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: image-reflector-controller
+        annotations:
+          eks.amazonaws.com/role-arn: <role arn>      
+    target:
+      kind: ServiceAccount
+      name: image-reflector-controller
