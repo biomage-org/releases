@@ -12,7 +12,7 @@ patches:
       metadata:
         name: image-reflector-controller
         annotations:
-          eks.amazonaws.com/role-arn: <role arn>      
+          eks.amazonaws.com/role-arn: arn:aws:iam::242905224710:role/flux-image-reflector-role-staging
     target:
       kind: ServiceAccount
       name: image-reflector-controller
