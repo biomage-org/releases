@@ -14,9 +14,9 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/worker
   ref:
-    commit: 3eb66a4dc1b57ed47bee56493a5d0e5ff3fe976c
+    commit: 58aab562f2466d609e687589be3335ea9f7823bb
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: worker
@@ -24,8 +24,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-r
@@ -41,7 +42,7 @@ spec:
     semver:
       range: '>=0.0.0'
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-python
@@ -101,13 +102,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-tags-0.40.2-r # {"$imagepolicy": "worker-default:worker-r:tag"}
+        tag: refs-tags-0.41.0-r # {"$imagepolicy": "worker-default:worker-r:tag"}
       memoryRequest: 44Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-tags-0.40.2-python # {"$imagepolicy": "worker-default:worker-python:tag"}
+        tag: refs-tags-0.41.0-python # {"$imagepolicy": "worker-default:worker-python:tag"}
     kubernetes:
       env: production
     serviceAccount:
