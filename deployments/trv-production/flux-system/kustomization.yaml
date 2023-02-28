@@ -17,4 +17,4 @@ patches:
         name: image-reflector-controller
         namespace: flux-system
         annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::242905224710:role/flux-image-reflector-role-production
+          eks.amazonaws.com/role-arn: arn:aws:iam::964743398471:role/flux-image-reflector-role-production
