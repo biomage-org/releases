@@ -16,7 +16,7 @@ spec:
   ref:
     branch: worker-info
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: worker
@@ -24,8 +24,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-r
@@ -41,7 +42,7 @@ spec:
     numerical:
       order: asc
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: worker-python
@@ -101,13 +102,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-71-merge-a20cdf7004b2ea9e2418e59f1bd8deeb6391293d-1677058095-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
+        tag: refs-pull-71-merge-f1abf26620f31051def0940916182edc421be45a-1677643990-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-71-merge-a20cdf7004b2ea9e2418e59f1bd8deeb6391293d-1677058095-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
+        tag: refs-pull-71-merge-f1abf26620f31051def0940916182edc421be45a-1677643990-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
