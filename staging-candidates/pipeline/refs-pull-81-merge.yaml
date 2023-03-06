@@ -16,7 +16,7 @@ spec:
   ref:
     branch: dependabot/npm_and_yarn/local-runner/decode-uri-component-0.2.2
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: pipeline
@@ -24,8 +24,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: pipeline
@@ -86,7 +87,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-81-merge-fef0edb17a302af3dd729eb4c19a69aca21152af-pipeline-runner-1672441164 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
+      tag: refs-pull-81-merge-1b8b06139914b76497025d636921ca70c44faf9d-pipeline-runner-1678135468 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
