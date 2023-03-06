@@ -333,7 +333,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-pull-73-merge-3de7019ca0a65158fbc22326efcbf86d5405b35e-1678117772-r # {"$imagepolicy": "worker-martinfosco-ui190-api119-w:worker-r:tag"}
-      memoryRequest: 4Gi
+      memoryRequest: 48Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
