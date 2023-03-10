@@ -332,13 +332,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-73-merge-be16706d08143e1bfdaf77917de574d7902104e0-1678468651-r # {"$imagepolicy": "worker-martinfosco-ui190-api119-w:worker-r:tag"}
+        tag: refs-pull-73-merge-aff1b375d066ee9c5da15517dcb6410e67018f82-1678471222-r # {"$imagepolicy": "worker-martinfosco-ui190-api119-w:worker-r:tag"}
       memoryRequest: 44Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-73-merge-be16706d08143e1bfdaf77917de574d7902104e0-1678468651-python # {"$imagepolicy": "worker-martinfosco-ui190-api119-w:worker-python:tag"}
+        tag: refs-pull-73-merge-aff1b375d066ee9c5da15517dcb6410e67018f82-1678471222-python # {"$imagepolicy": "worker-martinfosco-ui190-api119-w:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
