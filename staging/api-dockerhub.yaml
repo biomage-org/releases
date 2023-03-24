@@ -3,13 +3,13 @@ kind: Namespace
 metadata:
   name: api-dockerhub
   labels:
-    sandboxId: dockerhub
+    sandboxId: default
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
-  name: api-chart
-  namespace: api-dockerhub
+  name: api-dockerhub-chart
+  namespace: api-default
 spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
@@ -19,8 +19,8 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: api
-  namespace: api-dockerhub
+  name: api-dockerhub
+  namespace: api-default
 spec:
   image: cellenics/api
   interval: 2m0s
@@ -28,11 +28,11 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: api
-  namespace: api-dockerhub
+  name: api-dockerhub
+  namespace: api-default
 spec:
   imageRepositoryRef:
-    name: api
+    name: api-dockerhub
   filterTags:
     pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)$
     extract: $timestamp
@@ -43,8 +43,8 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: api-image-update
-  namespace: api-dockerhub
+  name: api-dockerhub-image-update
+  namespace: api-default
 spec:
   interval: 2m0s
   sourceRef:
@@ -63,20 +63,20 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: api
-  namespace: api-dockerhub
+  name: api-dockerhub
+  namespace: api-default
   labels:
-    sandboxId: dockerhub
+    sandboxId: default
 spec:
-  releaseName: api
+  releasename: api-dockerhub
   interval: 2m0s
   chart:
     spec:
       chart: charts/nodejs
       sourceRef:
         kind: GitRepository
-        name: api-chart
-        namespace: api-dockerhub
+        name: api-dockerhub-chart
+        namespace: api-default
       reconcileStrategy: Revision
   values:
     service:
@@ -97,12 +97,12 @@ spec:
       env: staging
     biomageCi:
       repo: biomage-org/api
-      sandboxId: dockerhub
-      rdssandboxId: dockerhub
+      sandboxId: default
+      rdsSandboxId: default
     image:
       registry: cellenics
       repository: api
-      tag: 0.63.0 # {"$imagepolicy": "api-dockerhub:api:tag"}
+      tag: 0.63.0 # {"$imagepolicy": "api:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
