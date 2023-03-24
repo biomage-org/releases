@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: api-default
   labels:
-    sandboxId: default
+    sandboxId: default 
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
