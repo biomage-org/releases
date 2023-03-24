@@ -102,7 +102,7 @@ spec:
     image:
       registry: cellenics
       repository: api
-      tag: 0.63.0 # {"$imagepolicy": "api:api:tag"}
+      tag: 0.64.0 # {"$imagepolicy": "api:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
