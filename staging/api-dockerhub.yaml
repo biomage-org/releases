@@ -102,7 +102,7 @@ spec:
     image:
       registry: cellenics
       repository: api
-      tag: 0.63.0 # {"$imagepolicy": "api-default:api:tag"}
+      tag: refs-heads-master-e578e023a9f22b0097fdcc53917e02b172603a10-1679573266 # {"$imagepolicy": "api-default:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
