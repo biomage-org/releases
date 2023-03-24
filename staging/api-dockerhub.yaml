@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: api-dockerhub
   labels:
-    sandboxId: default
+    sandboxId: dockerhub
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
@@ -66,7 +66,7 @@ metadata:
   name: api
   namespace: api-dockerhub
   labels:
-    sandboxId: default
+    sandboxId: dockerhub
 spec:
   releaseName: api
   interval: 2m0s
@@ -97,8 +97,8 @@ spec:
       env: staging
     biomageCi:
       repo: biomage-org/api
-      sandboxId: default
-      rdsSandboxId: default
+      sandboxId: dockerhub
+      rdssandboxId: dockerhub
     image:
       registry: cellenics
       repository: api
