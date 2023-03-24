@@ -68,7 +68,7 @@ metadata:
   labels:
     sandboxId: default
 spec:
-  releasename: api-dockerhub
+  releaseName: api-dockerhub
   interval: 2m0s
   chart:
     spec:
