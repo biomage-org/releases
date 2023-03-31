@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: api-default
   labels:
-    sandboxId: default 
+    sandboxId: default
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
@@ -103,7 +103,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-heads-master-e578e023a9f22b0097fdcc53917e02b172603a10-1679573266 # {"$imagepolicy": "api-default:api:tag"}
+      tag: refs-heads-master-eed84b8bb74846042e113d5eab4d3685340f58e4-1680269986 # {"$imagepolicy": "api-default:api:tag"}
     replicaCount: 2
     serviceAccount:
       iamRole: api-role-staging
