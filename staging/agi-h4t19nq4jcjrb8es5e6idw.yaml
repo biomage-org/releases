@@ -1,0 +1,455 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ui-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: ui-chart
+  namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    commit: ea8198b85f29e40ca52452a8c31f727f89ec870d
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: ui
+  namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/ui
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: ui
+  namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  imageRepositoryRef:
+    name: ui
+    namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: ui-image-update
+  namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - UI image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ui
+  namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  releaseName: ui
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: ui-chart
+        namespace: ui-agi-h4t19nq4jcjrb8es5e6idw
+      reconcileStrategy: Revision
+  values:
+    # disable readiness probes as load balancer performs
+    # its own health checks/cordoning
+    readinessProbe:
+      probeType: exec
+      command: [echo, '0']
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    livenessProbe:
+      probeType: tcpSocket
+    service:
+      additionalHosts: false
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-heads-master-aec12f7935bb4b4e9e5823c31da9ce7682c2eeeb-1682701638 # {"$imagepolicy": "ui-agi-h4t19nq4jcjrb8es5e6idw:ui:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+      # filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: api-chart
+  namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    commit: ea8198b85f29e40ca52452a8c31f727f89ec870d
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: api
+  namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/api
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: api
+  namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  imageRepositoryRef:
+    name: api
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: api-image-update
+  namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - API image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: api
+  namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  releaseName: api
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: api-chart
+        namespace: api-agi-h4t19nq4jcjrb8es5e6idw
+      reconcileStrategy: Revision
+  values:
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    readinessProbe:
+      path: /v2/health
+    livenessProbe:
+      probeType: tcpSocket
+    resources:
+      requests:
+        cpu: 100m
+    hpa:
+      enabled: false
+    loadBalancerHealthCheck:
+      path: /
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/api
+      sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+      rdsSandboxId: default
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-heads-master-29893ce334f86247159f139c3e5ae33adf9060f1-1682086172 # {"$imagepolicy": "api-agi-h4t19nq4jcjrb8es5e6idw:api:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+# filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: worker-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: worker-chart
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/worker
+  ref:
+    commit: b12ad296549209bfebd9c21812cb7b31eda89721
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: worker
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-r
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  imageRepositoryRef:
+    name: worker
+    namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-python
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  imageRepositoryRef:
+    name: worker
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-python$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: worker-image-update
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Worker image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: worker
+  namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  releaseName: worker
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: worker-chart
+        namespace: worker-agi-h4t19nq4jcjrb8es5e6idw
+      reconcileStrategy: Revision
+  values:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+    replicaCount: 0
+    r:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-b12ad296549209bfebd9c21812cb7b31eda89721-1682100529-r # {"$imagepolicy": "worker-agi-h4t19nq4jcjrb8es5e6idw:worker-r:tag"}
+      memoryRequest: 4Gi
+    python:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-b12ad296549209bfebd9c21812cb7b31eda89721-1682100529-python # {"$imagepolicy": "worker-agi-h4t19nq4jcjrb8es5e6idw:worker-python:tag"}
+    kubernetes:
+      env: staging
+    serviceAccount:
+      iamRole: worker-role-staging
+    datadogTags: kube_namespace:worker-agi-h4t19nq4jcjrb8es5e6idw
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: pipeline-chart
+  namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/pipeline
+  ref:
+    commit: 13caa2a9088906300744a1c87bdbb01fe62d6746
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  imageRepositoryRef:
+    name: pipeline
+    namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-pipeline-runner-(?P<timestamp>[0-9]+)
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pipeline-image-update
+  namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Pipeline image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pipeline
+  namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+  labels:
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+spec:
+  releaseName: pipeline
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: pipeline-chart
+        namespace: pipeline-agi-h4t19nq4jcjrb8es5e6idw
+      reconcileStrategy: Revision
+  values:
+    replicaCount: 0
+    clusterEnv: staging
+    sandboxId: agi-h4t19nq4jcjrb8es5e6idw
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: pipeline
+      tag: refs-heads-master-13caa2a9088906300744a1c87bdbb01fe62d6746-pipeline-runner-1682781998 # {"$imagepolicy": "pipeline-agi-h4t19nq4jcjrb8es5e6idw:pipeline:tag"}
+    memoryRequest: 4Gi
+    serviceAccount:
+      iamRole: pipeline-role-staging
+    datadogTags: kube_namespace:pipeline-agi-h4t19nq4jcjrb8es5e6idw
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
