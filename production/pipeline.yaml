@@ -81,7 +81,7 @@ spec:
         namespace: pipeline-default
       reconcileStrategy: Revision
   values:
-    replicaCount: 3
+    replicaCount: 1
     clusterEnv: production
     sandboxId: default
     image:
