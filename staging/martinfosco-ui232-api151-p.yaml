@@ -440,7 +440,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-159-merge-acc7c4df2f40416ab0715d4e9ba960dcfaa9ab15-pipeline-runner-1686329678 # {"$imagepolicy": "pipeline-martinfosco-ui232-api151-p:pipeline:tag"}
+      tag: refs-pull-159-merge-6bafc2e3bb674e657b63066543791b933d455a19-pipeline-runner-1686336039 # {"$imagepolicy": "pipeline-martinfosco-ui232-api151-p:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
