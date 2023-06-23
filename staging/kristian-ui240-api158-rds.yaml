@@ -217,7 +217,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-158-merge-aa07c002b9da094b1556fe3929bf397444e559c2-1687426892 # {"$imagepolicy": "api-kristian-ui240-api158-rds:api:tag"}
+      tag: refs-pull-158-merge-e1843b75e6501e5a92a7dbb630b27c695555eec1-1687533211 # {"$imagepolicy": "api-kristian-ui240-api158-rds:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
