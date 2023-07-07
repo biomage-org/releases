@@ -336,7 +336,7 @@ spec:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
         tag: refs-heads-master-76031fc347866c3f0735c90ee2e5da50a60a2b1a-1685725296-r # {"$imagepolicy": "worker-martinfosco-pipeline166:worker-r:tag"}
-      memoryRequest: 4Gi
+      memoryRequest: 44Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
@@ -437,7 +437,7 @@ spec:
       reconcileStrategy: Revision
   values:
     replicaCount: 0
-    clusterEnv: staging
+    clusterEnv: staginghttps://github.com/biomage-org/releases/blob/master/staging/martinfosco-pipeline166.yaml
     sandboxId: martinfosco-pipeline166
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
