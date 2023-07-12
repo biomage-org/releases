@@ -12,7 +12,7 @@ metadata:
   namespace: worker-STAGING_SANDBOX_ID
 spec:
   interval: 5m0s
-  url: https://github.com//worker
+  url: https://github.com/biomage-org/worker
   ref:
     branch: hms-merge
 ---
@@ -102,13 +102,13 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-99-merge-73df5aae3c501b1d0c92360dc820a6acd10b2d4e-1688983286-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
+        tag: refs-pull-99-merge-7ae0ada2b960b97a7e89f1845d433313ba8e5205-1689167495-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-99-merge-73df5aae3c501b1d0c92360dc820a6acd10b2d4e-1688983286-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
+        tag: refs-pull-99-merge-7ae0ada2b960b97a7e89f1845d433313ba8e5205-1689167495-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
