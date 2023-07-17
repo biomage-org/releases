@@ -12,7 +12,7 @@ metadata:
   namespace: api-STAGING_SANDBOX_ID
 spec:
   interval: 5m0s
-  url: https://github.com/biomage-org/iac
+  url: https://github.com/hms-dbmi-cellenics/iac
   ref:
     branch: master
 ---
@@ -103,7 +103,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-heads-master-007e36a1a18c1416bebf787340e9780e1b6b05d5-1687773988 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
+      tag: refs-heads-master-d4ea2227ecb368223833c4dbe7af25271b56e46a-1689602192 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
