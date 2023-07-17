@@ -12,7 +12,7 @@ metadata:
   namespace: ui-default
 spec:
   interval: 5m0s
-  url: https://github.com/biomage-org/iac
+  url: https://github.com/hms-dbmi-cellenics/iac
   ref:
     branch: master
 ---
@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-heads-master-cc6fcb90178336048f87b16777993723c0616b4d-1688739040 # {"$imagepolicy": "ui-default:ui:tag"}
+      tag: refs-heads-master-c611ab891c84f9d94e82f1d020d7d6388b402a3e-1689603845 # {"$imagepolicy": "ui-default:ui:tag"}
     replicaCount: 2
     serviceAccount:
       iamRole: ui-role-staging
