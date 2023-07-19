@@ -12,7 +12,7 @@ metadata:
   namespace: api-STAGING_SANDBOX_ID
 spec:
   interval: 5m0s
-  url: https://github.com//iac
+  url: https://github.com/biomage-org/iac
   ref:
     branch: master
 ---
@@ -103,7 +103,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-heads-master-7209e7a1e6bb97212847a96c79c5057643ea0eff-1689777636 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
+      tag: refs-heads-master-7cab3c905041adbbecc3332bfafb0f79839c4813-1689778608 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
