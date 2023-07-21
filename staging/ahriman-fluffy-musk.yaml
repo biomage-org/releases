@@ -369,7 +369,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/pipeline
   ref:
-    commit: 17a4993837e91a933ed53702aa71312d1e6cdb20
+    commit: 10b3615873734b7f4621d525a075dfd66604d9b2
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
