@@ -103,7 +103,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: worker-speed-improvements-test-cee2dc68397cce979814e5ab7c04f598ee38bdbf-1692285995 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
+      tag: worker-speed-improvements-test-cee2dc68397cce979814e5ab7c04f598ee38bdbf-1692286371 # {"$imagepolicy": "api-STAGING_SANDBOX_ID:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
