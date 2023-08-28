@@ -87,8 +87,8 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-heads-master-e4e39eb15a1cc91bde290304cd143391451dea37-pipeline-runner-1692622908 # {"$imagepolicy": "pipeline-tester:pipeline:tag"}
-    memoryRequest: 16Gi
+      tag: pipeline-runner-seurat-v5
+    memoryRequest: 50Gi
     serviceAccount:
       iamRole: pipeline-role-staging
     datadogTags: kube_namespace:pipeline-tester
