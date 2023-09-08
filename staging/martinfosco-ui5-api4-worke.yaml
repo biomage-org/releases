@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-5-merge-e80c1dca3d127926598ab02261ed3ab6ae748ba7-1694090014 # {"$imagepolicy": "ui-martinfosco-ui5-api4-worke:ui:tag"}
+      tag: refs-pull-5-merge-e80c1dca3d127926598ab02261ed3ab6ae748ba7-1694200742 # {"$imagepolicy": "ui-martinfosco-ui5-api4-worke:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
@@ -110,7 +110,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
