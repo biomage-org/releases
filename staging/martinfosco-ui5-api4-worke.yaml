@@ -266,7 +266,7 @@ spec:
     name: worker
     namespace: worker-martinfosco-ui5-api4-worke
   filterTags:
-    pattern: ^refs-pull-11-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
+    pattern: ^refs-pull-11-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-r-ci$
     extract: $timestamp
   policy:
     numerical:
@@ -281,7 +281,7 @@ spec:
   imageRepositoryRef:
     name: worker
   filterTags:
-    pattern: ^refs-pull-11-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-python$
+    pattern: ^refs-pull-11-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-python-ci$
     extract: $timestamp
   policy:
     numerical:
