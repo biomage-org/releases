@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-17-merge-1f557e1c7019290716eea09afdd89de1be13939e-1695988520 # {"$imagepolicy": "ui-grasp6-ui17-api8:ui:tag"}
+      tag: refs-pull-17-merge-1f557e1c7019290716eea09afdd89de1be13939e-1695991434 # {"$imagepolicy": "ui-grasp6-ui17-api8:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
