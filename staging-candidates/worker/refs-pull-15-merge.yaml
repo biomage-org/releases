@@ -5,37 +5,117 @@ metadata:
   labels:
     sandboxId: STAGING_SANDBOX_ID
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: worker-chart
+  namespace: worker-STAGING_SANDBOX_ID
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/worker
+  ref:
+    branch: download-metadata-names
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: worker
+  namespace: worker-STAGING_SANDBOX_ID
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-r
+  namespace: worker-STAGING_SANDBOX_ID
+spec:
+  imageRepositoryRef:
+    name: worker
+    namespace: worker-STAGING_SANDBOX_ID
+  filterTags:
+    pattern: ^refs-pull-15-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-python
+  namespace: worker-STAGING_SANDBOX_ID
+spec:
+  imageRepositoryRef:
+    name: worker
+  filterTags:
+    pattern: ^refs-pull-15-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)-python$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: worker-image-update
+  namespace: worker-STAGING_SANDBOX_ID
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Worker image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: worker
   namespace: worker-STAGING_SANDBOX_ID
-  annotations:
-    fluxcd.io/automated: "true"
-    filter.fluxcd.io/r: glob:refs-pull-15-merge-*-r
-    filter.fluxcd.io/python: glob:refs-pull-15-merge-*-python
   labels:
     sandboxId: STAGING_SANDBOX_ID
 spec:
   releaseName: worker
+  interval: 2m0s
   chart:
-    git: https://github.com/biomage-org/worker
-    path: chart-infra/
-    ref: STAGING_CHART_REF
-  valuesFrom:
-    - configMapKeyRef:
-        name: account-config
-        namespace: flux
-        key: account-config.yaml
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: worker-chart
+        namespace: worker-STAGING_SANDBOX_ID
+      reconcileStrategy: Revision
   values:
+    sandboxId: STAGING_SANDBOX_ID
+    replicaCount: 0
+    r:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-pull-15-merge-11b3d90da687a51a9206aeb4216d12c513196159-1696587112-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
+      memoryRequest: 4Gi
+    python:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-pull-15-merge-11b3d90da687a51a9206aeb4216d12c513196159-1696587112-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
       iamRole: worker-role-staging
-    sandboxId: STAGING_SANDBOX_ID
-    replicaCount: 0
-    r:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-15-merge-6cecf62aaca6a64b2536e551b311c3aa7638f7dc-r
-      memoryRequest: 4Gi
-    python:
-      image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker:refs-pull-15-merge-6cecf62aaca6a64b2536e551b311c3aa7638f7dc-python
+    datadogTags: kube_namespace:worker-STAGING_SANDBOX_ID
+  valuesFrom:
+    - kind: ConfigMap
+      valuesKey: account-config.yaml
+      name: account-config
+      optional: false
