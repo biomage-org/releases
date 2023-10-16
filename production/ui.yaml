@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: 0.85.6 # {"$imagepolicy": "ui-default:ui:tag"}
+      tag: 0.85.7 # {"$imagepolicy": "ui-default:ui:tag"}
     replicaCount: 4
     serviceAccount:
       iamRole: ui-role-production
