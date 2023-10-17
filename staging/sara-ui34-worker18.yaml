@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-34-merge-d6d8109224b285f460c72b7de61f0ebc0bf1a9da-1697529907 # {"$imagepolicy": "ui-sara-ui34-worker18:ui:tag"}
+      tag: refs-pull-34-merge-89fbc7be4cd07c25447855e74a11819e0f919e73-1697545915 # {"$imagepolicy": "ui-sara-ui34-worker18:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
