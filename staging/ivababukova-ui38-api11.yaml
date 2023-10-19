@@ -217,7 +217,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-11-merge-65046c62665fd02e894fe43c42c91baa2298531b-1697701844 # {"$imagepolicy": "api-ivababukova-ui38-api11:api:tag"}
+      tag: refs-pull-11-merge-65046c62665fd02e894fe43c42c91baa2298531b-1697707481 # {"$imagepolicy": "api-ivababukova-ui38-api11:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
