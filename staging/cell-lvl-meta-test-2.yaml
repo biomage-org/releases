@@ -1,0 +1,452 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ui-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: ui-chart
+  namespace: ui-cell-lvl-meta-test-2
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    branch: master
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: ui
+  namespace: ui-cell-lvl-meta-test-2
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/ui
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: ui
+  namespace: ui-cell-lvl-meta-test-2
+spec:
+  imageRepositoryRef:
+    name: ui
+    namespace: ui-cell-lvl-meta-test-2
+  filterTags:
+    pattern: ^refs-pull-46-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: ui-image-update
+  namespace: ui-cell-lvl-meta-test-2
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - UI image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ui
+  namespace: ui-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+spec:
+  releaseName: ui
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: ui-chart
+        namespace: ui-cell-lvl-meta-test-2
+      reconcileStrategy: Revision
+  values:
+    # disable readiness probes as load balancer performs
+    # its own health checks/cordoning
+    readinessProbe:
+      probeType: exec
+      command: [echo, '0']
+    loadBalancerHealthCheck:
+      path: /robots.txt
+      periodSeconds: 30
+    livenessProbe:
+      probeType: tcpSocket
+    service:
+      additionalHosts: false
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/ui
+      sandboxId: cell-lvl-meta-test-2
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: ui
+      tag: refs-pull-46-merge-18070dde12c99142e8b1091c6b2f4bad07784556-1698941111 # {"$imagepolicy": "ui-cell-lvl-meta-test-2:ui:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: ui-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+      # filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: api-chart
+  namespace: api-cell-lvl-meta-test-2
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/iac
+  ref:
+    branch: master
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: api
+  namespace: api-cell-lvl-meta-test-2
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/api
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: api
+  namespace: api-cell-lvl-meta-test-2
+spec:
+  imageRepositoryRef:
+    name: api
+  filterTags:
+    pattern: ^refs-pull-20-merge-[a-f0-9]+-(?P<timestamp>[0-9]+)$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: api-image-update
+  namespace: api-cell-lvl-meta-test-2
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - API image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: api
+  namespace: api-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+spec:
+  releaseName: api
+  interval: 2m0s
+  chart:
+    spec:
+      chart: charts/nodejs
+      sourceRef:
+        kind: GitRepository
+        name: api-chart
+        namespace: api-cell-lvl-meta-test-2
+      reconcileStrategy: Revision
+  values:
+    service:
+      externalPort: 3000
+      internalPort: 3000
+    readinessProbe:
+      path: /v2/health
+    livenessProbe:
+      probeType: tcpSocket
+    resources:
+      requests:
+        cpu: 100m
+    hpa:
+      enabled: false
+    loadBalancerHealthCheck:
+      path: /
+    kubernetes:
+      env: staging
+    biomageCi:
+      repo: biomage-org/api
+      sandboxId: cell-lvl-meta-test-2
+      rdsSandboxId: default
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: api
+      tag: refs-pull-20-merge-e2fd3d2b328db7ea62cb349d9fc57f1a0457e2c6-1698940160 # {"$imagepolicy": "api-cell-lvl-meta-test-2:api:tag"}
+    replicaCount: 1
+    serviceAccount:
+      iamRole: api-role-staging
+  valuesFrom:
+  - kind: ConfigMap
+    name: account-config
+    valuesKey: account-config.yaml
+    optional: false
+# filled in by CI. do not modify.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: worker-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: worker-chart
+  namespace: worker-cell-lvl-meta-test-2
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/worker
+  ref:
+    commit: fa391bb545c9fa0aab7be61a9cae8e7e7155faed
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: worker
+  namespace: worker-cell-lvl-meta-test-2
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/worker
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-r
+  namespace: worker-cell-lvl-meta-test-2
+spec:
+  imageRepositoryRef:
+    name: worker
+    namespace: worker-cell-lvl-meta-test-2
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-r$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: worker-python
+  namespace: worker-cell-lvl-meta-test-2
+spec:
+  imageRepositoryRef:
+    name: worker
+  filterTags:
+    pattern: ^refs-heads-master-[a-f0-9]+-(?P<timestamp>[0-9]+)-python$
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: worker-image-update
+  namespace: worker-cell-lvl-meta-test-2
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Worker image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+  suspend: true
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: worker
+  namespace: worker-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+spec:
+  releaseName: worker
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: worker-chart
+        namespace: worker-cell-lvl-meta-test-2
+      reconcileStrategy: Revision
+  values:
+    sandboxId: cell-lvl-meta-test-2
+    replicaCount: 0
+    r:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-fa391bb545c9fa0aab7be61a9cae8e7e7155faed-1698247143-r # {"$imagepolicy": "worker-cell-lvl-meta-test-2:worker-r:tag"}
+      memoryRequest: 4Gi
+    python:
+      image:
+        registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+        repository: worker
+        tag: refs-heads-master-fa391bb545c9fa0aab7be61a9cae8e7e7155faed-1698247143-python # {"$imagepolicy": "worker-cell-lvl-meta-test-2:worker-python:tag"}
+    kubernetes:
+      env: staging
+    serviceAccount:
+      iamRole: worker-role-staging
+    datadogTags: kube_namespace:worker-cell-lvl-meta-test-2
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pipeline-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: pipeline-chart
+  namespace: pipeline-cell-lvl-meta-test-2
+spec:
+  interval: 5m0s
+  url: https://github.com/biomage-org/pipeline
+  ref:
+    branch: fix-cl-metadata-paths
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: pipeline
+  namespace: pipeline-cell-lvl-meta-test-2
+spec:
+  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
+  interval: 2m0s
+  provider: aws
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: pipeline
+  namespace: pipeline-cell-lvl-meta-test-2
+spec:
+  imageRepositoryRef:
+    name: pipeline
+    namespace: pipeline-cell-lvl-meta-test-2
+  filterTags:
+    pattern: ^refs-pull-12-merge-[a-f0-9]+-pipeline-runner-(?P<timestamp>[0-9]+)
+    extract: $timestamp
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: pipeline-image-update
+  namespace: pipeline-cell-lvl-meta-test-2
+spec:
+  interval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    commit:
+      author:
+        name: Flux - Pipeline image update
+        email: ci@biomage.net
+  update:
+    strategy: Setters
+    path: ./staging
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pipeline
+  namespace: pipeline-cell-lvl-meta-test-2
+  labels:
+    sandboxId: cell-lvl-meta-test-2
+spec:
+  releaseName: pipeline
+  interval: 2m0s
+  chart:
+    spec:
+      chart: chart-infra/
+      sourceRef:
+        kind: GitRepository
+        name: pipeline-chart
+        namespace: pipeline-cell-lvl-meta-test-2
+      reconcileStrategy: Revision
+  values:
+    replicaCount: 0
+    clusterEnv: staging
+    sandboxId: cell-lvl-meta-test-2
+    image:
+      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      repository: pipeline
+      tag: refs-pull-12-merge-e2334b816db6c2d0a4f46b712b8588a7ba74093f-pipeline-runner-1698940773 # {"$imagepolicy": "pipeline-cell-lvl-meta-test-2:pipeline:tag"}
+    memoryRequest: 4Gi
+    serviceAccount:
+      iamRole: pipeline-role-staging
+    datadogTags: kube_namespace:pipeline-cell-lvl-meta-test-2
+  valuesFrom:
+  - kind: ConfigMap
+    valuesKey: account-config.yaml
+    name: account-config
+    optional: false
