@@ -14,9 +14,9 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/pipeline
   ref:
-    branch: dependabot/npm_and_yarn/local-runner/hosted-git-info-2.8.9
+    branch: fix-clm-per-sample-detection
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: pipeline
@@ -24,8 +24,9 @@ metadata:
 spec:
   image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/pipeline
   interval: 2m0s
+  provider: aws
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: pipeline
@@ -86,7 +87,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: pipeline
-      tag: refs-pull-16-merge-6aa3da8b69363d7ea50cb63be3864e9cc5a84f11-pipeline-runner-1672403630 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
+      tag: refs-pull-16-merge-d7e9a8e70ff5da2e7bf07863d00cf64c5b958bee-pipeline-runner-1700241979 # {"$imagepolicy": "pipeline-STAGING_SANDBOX_ID:pipeline:tag"}
     memoryRequest: 4Gi
     serviceAccount:
       iamRole: pipeline-role-staging
