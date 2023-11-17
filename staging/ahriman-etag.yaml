@@ -217,7 +217,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: api
-      tag: refs-pull-18-merge-280af478140ed7f20048588fb8c6fe65f32548f6-1700219924 # {"$imagepolicy": "api-ahriman-etag:api:tag"}
+      tag: refs-pull-18-merge-280af478140ed7f20048588fb8c6fe65f32548f6-1700228204 # {"$imagepolicy": "api-ahriman-etag:api:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: api-role-staging
