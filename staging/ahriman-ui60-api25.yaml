@@ -128,7 +128,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/iac
   ref:
-    branch: master
+    branch: scale-role
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
