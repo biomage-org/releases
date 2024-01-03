@@ -340,7 +340,7 @@ spec:
       image:
         registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
         repository: worker
-        tag: refs-pull-22-merge-0087ab63d1bbfb29c522f4f94bb88aae3e7931c3-1704309918-python # {"$imagepolicy": "worker-martinfosco-worker22:worker-python:tag"}
+        tag: refs-pull-22-merge-0087ab63d1bbfb29c522f4f94bb88aae3e7931c3-1704310420-python # {"$imagepolicy": "worker-martinfosco-worker22:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
