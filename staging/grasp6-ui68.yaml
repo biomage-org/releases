@@ -101,7 +101,7 @@ spec:
     image:
       registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
       repository: ui
-      tag: refs-pull-68-merge-9810c28bd0085542b36790bd64be442f9c2118f2-1704373414 # {"$imagepolicy": "ui-grasp6-ui68:ui:tag"}
+      tag: refs-pull-68-merge-9810c28bd0085542b36790bd64be442f9c2118f2-1704384019 # {"$imagepolicy": "ui-grasp6-ui68:ui:tag"}
     replicaCount: 1
     serviceAccount:
       iamRole: ui-role-staging
@@ -110,7 +110,7 @@ spec:
     name: account-config
     valuesKey: account-config.yaml
     optional: false
-      # filled in by CI. do not modify.
+    # filled in by CI. do not modify.
 ---
 apiVersion: v1
 kind: Namespace
