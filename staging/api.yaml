@@ -22,7 +22,7 @@ metadata:
   name: api
   namespace: api-default
 spec:
-  image: 242905224710.dkr.ecr.eu-west-1.amazonaws.com/api
+  image: 964743398471.dkr.ecr.us-east-2.amazonaws.com/api
   interval: 2m0s
   provider: aws
 ---
@@ -101,9 +101,9 @@ spec:
       sandboxId: default
       rdsSandboxId: default
     image:
-      registry: 242905224710.dkr.ecr.eu-west-1.amazonaws.com
+      registry: 964743398471.dkr.ecr.us-east-2.amazonaws.com
       repository: api
-      tag: refs-heads-master-628450d675c1954ef55dc8be266eed08e956e232-1704991878 # {"$imagepolicy": "api-default:api:tag"}
+      tag: refs-heads-master-628450d675c1954ef55dc8be266eed08e956e232-1705410933 # {"$imagepolicy": "api-default:api:tag"}
     replicaCount: 2
     serviceAccount:
       iamRole: api-role-staging
