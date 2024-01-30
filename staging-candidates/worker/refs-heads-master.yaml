@@ -102,13 +102,13 @@ spec:
       image:
         registry: 964743398471.dkr.ecr.us-east-2.amazonaws.com
         repository: worker
-        tag: refs-heads-master-827f21622965223dd529f85d24f88c7dc29fc42c-1705421377-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
+        tag: refs-heads-master-9445af5d713785578ec3fb7ceb54720cafa282b5-1706635466-r # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-r:tag"}
       memoryRequest: 4Gi
     python:
       image:
         registry: 964743398471.dkr.ecr.us-east-2.amazonaws.com
         repository: worker
-        tag: refs-heads-master-827f21622965223dd529f85d24f88c7dc29fc42c-1705421377-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
+        tag: refs-heads-master-9445af5d713785578ec3fb7ceb54720cafa282b5-1706635466-python # {"$imagepolicy": "worker-STAGING_SANDBOX_ID:worker-python:tag"}
     kubernetes:
       env: staging
     serviceAccount:
