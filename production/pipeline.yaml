@@ -14,7 +14,7 @@ spec:
   interval: 5m0s
   url: https://github.com/biomage-org/pipeline
   ref:
-    commit: dddacd0775bd6b0815f3abe3bcc85b2f309ab004
+    commit: f54a56a68a6d7a890061b0bb741c5a64b4358337
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
@@ -87,7 +87,7 @@ spec:
     image:
       registry: 964743398471.dkr.ecr.us-east-2.amazonaws.com
       repository: pipeline
-      tag: refs-tags-0.54.1-pipeline-runner # {"$imagepolicy": "pipeline-default:pipeline:tag"}
+      tag: refs-tags-0.54.2-pipeline-runner # {"$imagepolicy": "pipeline-default:pipeline:tag"}
     memoryRequest: 40Gi
     serviceAccount:
       iamRole: pipeline-role-production
