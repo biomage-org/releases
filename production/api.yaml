@@ -103,7 +103,7 @@ spec:
     image:
       registry: 964743398471.dkr.ecr.us-east-2.amazonaws.com
       repository: api
-      tag: 0.81.0 # {"$imagepolicy": "api-default:api:tag"}
+      tag: 0.81.1 # {"$imagepolicy": "api-default:api:tag"}
     replicaCount: 4
     serviceAccount:
       iamRole: api-role-production
